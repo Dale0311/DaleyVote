@@ -8,7 +8,7 @@ const genericType = {
 
 const userSchema = new Schema(
   {
-    name: genericType,
+    username: genericType,
     imageUrl: { require: false, type: String },
     password: genericType,
     email: genericType,

@@ -34,6 +34,7 @@ allows the user to create a voting system in a room.
 - duration
 - voting details
   voting details is an array of position
+- code
 
 ```js
 //where position is an object that is:

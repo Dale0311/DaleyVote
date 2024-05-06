@@ -21,8 +21,9 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/v1/user', userRoute);
-app.use('/api/v1/room', roomRoute);
+// app.use('/api/v1/room', roomRoute);
 app.use(errorHandler);
+
 // listen
 app.listen(process.env.PORT || PORT, () =>
   console.log(`Server is running on Port ${PORT}`)

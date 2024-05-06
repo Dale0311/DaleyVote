@@ -40,7 +40,8 @@ const roomSchema = new Schema(
     title: genericType,
     participants: [participant],
     createdById: genericType,
-    expiration: { type: Date },
+    expiration: Date,
+    code: String,
     votingDetails: [positon],
   },
   { timestamps: true }
