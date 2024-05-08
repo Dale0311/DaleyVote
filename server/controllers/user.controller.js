@@ -1,8 +1,10 @@
 import User from '../models/Users.model.js';
 import bcrypt from 'bcryptjs';
+import { generateToken } from '../utils/jwt.js';
 
 export const createUser = async (req, res, next) => {
-  const { username, email, password, imageUrl } = req.body;
+  const { username, email, password } = req.body;
+
   // validation
   if (!username || !email || !password) {
     res.status(400);
@@ -23,22 +25,48 @@ export const createUser = async (req, res, next) => {
       username,
       email,
       password: hashPwd,
-      imageUrl: imageUrl || '',
+      imageUrl: '',
     });
-    console.log(data);
     const { password, ...props } = data._doc;
-    res.json(props);
-    // {
-    // "username": "Dale",
-    // "imageUrl": "https://culted.com/wp-content/uploads/2021/08/eminem-feature-scaled.jpg",
-    // "email": "Ddddale25@email.com",
-    // "_id": "6638dc5e618d8f129036369c",
-    // "createdAt": "2024-05-06T13:34:22.733Z",
-    // "updatedAt": "2024-05-06T13:34:22.733Z",
-    // "__v": 0
-    // }
+
+    // generate jwt token and set it to res.cookie
+    const id = props._id.toString();
+    generateToken(id, res);
+    res.status(201).json(props);
   } catch (error) {
-    console.log(error);
-    next(new Error('something went wrong in saving your credentials mate'));
+    next(new Error('Something went wrong in the server'));
   }
+};
+
+export const signin = async (req, res, next) => {
+  const { email, password } = req.body;
+  await new Promise(() => setTimeout(() => {}, 2000));
+  if (!email || !password) {
+    res.status(400);
+    return next(new Error('Email and password are required'));
+  }
+
+  const userExist = await User.findOne({ email });
+  if (!userExist) {
+    res.status(404);
+    return next(new Error("Email doesn't exist"));
+  }
+
+  // validate password
+  bcrypt.compare(password, userExist.password, (err, success) => {
+    if (!success) {
+      res.status(401);
+      return next(new Error('Email or password is incorrect'));
+    }
+
+    const { password: pass, ...data } = userExist._doc;
+    const id = data._id.toString();
+
+    // generate jwt token and set it to res.cookie
+    generateToken(id, res);
+    console.log(data);
+    console.log('-----------------------------');
+    console.log(success);
+    res.json(data);
+  });
 };

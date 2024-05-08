@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import connectDb from './config/mongoDb.js';
 import userRoute from './routes/user.route.js';
 import { errorHandler } from './middlewares/error.middleware.js';
+import { corsOptions } from './config/cors.js';
 
 const PORT = 5300;
 const app = express();
@@ -15,6 +16,7 @@ dotenv.config();
 connectDb();
 
 // middlewares
+// app.use(cors(corsOptions));
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
