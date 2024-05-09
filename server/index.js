@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 // local imports
 import connectDb from './config/mongoDb.js';
 import userRoute from './routes/user.route.js';
-import { errorHandler } from './middlewares/error.middleware.js';
+import { errorHandler, requireToken } from './middlewares/index.middleware.js';
 import { corsOptions } from './config/cors.js';
 
 const PORT = 5300;
@@ -23,8 +23,10 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/v1/user', userRoute);
+
+app.use(requireToken);
 app.get('/api/v1/test', (req, res) => {
-  console.log('hey this endpoint got called');
+  console.log(req?.currentUser);
   res.json({ message: 'hey' });
 });
 // app.use('/api/v1/room', roomRoute);
