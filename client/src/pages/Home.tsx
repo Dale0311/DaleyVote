@@ -2,11 +2,16 @@ import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import JoinRoom from '../components/JoinRoom';
 import { useCurrentUserStore } from '../store/store';
+import { io } from 'socket.io-client';
 
 const names = ['Dale', 'KC', 'Justine'];
 const Home = () => {
-  const token = useCurrentUserStore((state) => state.token);
-  console.log(token);
+  // socket
+  const socket = io('http://localhost:5300');
+  socket.on('connect', () => {
+    console.log(`user: ${socket.id} is connected to the socket`);
+  });
+
   return (
     <div className="border">
       {/* crud room */}

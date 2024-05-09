@@ -9,9 +9,9 @@ import connectDb from './config/mongoDb.js';
 import userRoute from './routes/user.route.js';
 import { errorHandler, requireToken } from './middlewares/index.middleware.js';
 import { corsOptions } from './config/cors.js';
+import { app, httpServer } from './socket/index.socket.js';
 
 const PORT = 5300;
-const app = express();
 dotenv.config();
 connectDb();
 
@@ -33,6 +33,6 @@ app.get('/api/v1/test', (req, res) => {
 app.use(errorHandler);
 
 // listen
-app.listen(process.env.PORT || PORT, () =>
+httpServer.listen(process.env.PORT || PORT, () =>
   console.log(`Server is running on Port ${PORT}`)
 );
