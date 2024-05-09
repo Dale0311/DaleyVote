@@ -2,22 +2,38 @@ import { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { api } from '../../api/index.api';
 import axios from 'axios';
+import { useCurrentUserStore } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
+  const setToken = useCurrentUserStore((state) => state.setToken);
+  const nav = useNavigate();
+
   // states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = async () => {
     try {
       setLoading(true);
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve('hey');
+        }, 2000);
+      });
       const data = await api.post('/user/signin', {
         email,
         password,
       });
-      console.log(data);
+
+      setEmail('');
+      setPassword('');
+
+      setToken(data?.data);
+      nav('/');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setErrorMessage(error.response?.data.message);
@@ -76,10 +92,10 @@ const Signin = () => {
           <div>
             <button
               onClick={handleSubmit}
-              disabled={!canSave}
+              disabled={!canSave || loading}
               className="py-2 text-white font-body bg-blue-500 hover:bg-blue-600 rounded w-full disabled:opacity-50 disabled:hover:bg-blue-500 disabled:cursor-not-allowed"
             >
-              {loading ? 'Submitting' : 'Sign in'}
+              {loading ? 'Submitting...' : 'Sign in'}
             </button>
           </div>
         </div>

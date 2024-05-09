@@ -40,7 +40,6 @@ export const createUser = async (req, res, next) => {
 
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
-  await new Promise(() => setTimeout(() => {}, 2000));
   if (!email || !password) {
     res.status(400);
     return next(new Error('Email and password are required'));
@@ -60,13 +59,10 @@ export const signin = async (req, res, next) => {
     }
 
     const { password: pass, ...data } = userExist._doc;
-    const id = data._id.toString();
 
     // generate jwt token and set it to res.cookie
-    generateToken(id, res);
-    console.log(data);
-    console.log('-----------------------------');
-    console.log(success);
-    res.json(data);
+    const token = generateToken(data);
+
+    res.json(token);
   });
 };

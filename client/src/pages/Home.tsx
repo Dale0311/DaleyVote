@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import JoinRoom from '../components/JoinRoom';
+import { useCurrentUserStore } from '../store/store';
 
 const names = ['Dale', 'KC', 'Justine'];
 const Home = () => {
+  const token = useCurrentUserStore((state) => state.token);
+  console.log(token);
   return (
     <div className="border">
       {/* crud room */}
@@ -20,7 +23,7 @@ const Home = () => {
       {/* Cards */}
       <div className="flex space-x-2 justify-center my-4">
         {names.map((name) => (
-          <Card name={name} />
+          <Card key={name} name={name} />
         ))}
       </div>
     </div>

@@ -23,6 +23,10 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/v1/user', userRoute);
+app.get('/api/v1/test', (req, res) => {
+  console.log('hey this endpoint got called');
+  res.json({ message: 'hey' });
+});
 // app.use('/api/v1/room', roomRoute);
 app.use(errorHandler);
 
