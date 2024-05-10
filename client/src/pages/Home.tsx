@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import JoinRoom from '../components/JoinRoom';
-import { useCurrentUserStore } from '../store/store';
 import { io } from 'socket.io-client';
 
 const names = ['Dale', 'KC', 'Justine'];
 const Home = () => {
   // socket
-  const socket = io('http://localhost:5300');
+  const socket = io('http://localhost:5300', {query: {}});
   socket.on('connect', () => {
     console.log(`user: ${socket.id} is connected to the socket`);
   });

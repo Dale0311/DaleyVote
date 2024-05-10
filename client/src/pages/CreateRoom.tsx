@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import CreateCandidate from '../components/CreateCandidate';
 import { HiOutlineArrowRightStartOnRectangle } from 'react-icons/hi2';
-import { Candidate } from '../types/candidates';
 const CreateRoom = () => {
-  const [candidates, setCandidates] = useState<Candidate[]>([
+  const [candidates, setCandidates] = useState([
     { imgUrl: '', name: '', candidateId: `candidate1` },
     { imgUrl: '', name: '', candidateId: `candidate2` },
   ]);
