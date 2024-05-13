@@ -13,13 +13,10 @@ const candidate = new Schema({
 });
 
 // position for roomSchema
-const positon = new Schema({
+const position = new Schema({
   name: genericType,
   candidates: [candidate],
-  totalVotes: {
-    type: Number,
-    require: false,
-  },
+  totalVotes: Number,
 });
 
 // participants for roomSchema
@@ -42,7 +39,7 @@ const roomSchema = new Schema(
     createdById: genericType,
     expiration: Date,
     code: String,
-    votingDetails: [positon],
+    votingDetails: [position],
   },
   { timestamps: true }
 );

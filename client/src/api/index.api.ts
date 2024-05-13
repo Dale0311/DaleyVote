@@ -1,5 +1,5 @@
 import axios, { AxiosHeaders } from 'axios';
-import { useCurrentUserStore } from '../store/store';
+import { useCurrentUserStore } from '../store/currentUserSlice';
 
 export const api = axios.create({
   baseURL: 'http://localhost:5300/api/v1',

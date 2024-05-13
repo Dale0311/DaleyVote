@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { api } from '../../api/index.api';
 import axios from 'axios';
-import { useCurrentUserStore } from '../../store/store';
+import { useCurrentUserStore } from '../../store/currentUserSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {

@@ -7,6 +7,12 @@ export type CurrentUser<T> = {
   updateAt: Date;
 };
 
-export type ErrorRes = {
-    
-}
+export type Candidate = {
+  img: File | null;
+  name: string;
+};
+
+export type Position = {
+  title: string;
+  candidates: Candidate[];
+};
