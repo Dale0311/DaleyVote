@@ -13,6 +13,7 @@ export type Candidate = {
 };
 
 export type Position = {
+  id: string;
   title: string;
   candidates: Candidate[];
 };

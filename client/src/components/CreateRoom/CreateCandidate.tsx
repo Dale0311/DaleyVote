@@ -16,6 +16,7 @@ type Prop = {
   remove: UseFieldArrayRemove;
   errors: FieldErrors<Position>;
   isFinalized: boolean;
+  previewPicturePath: string;
 };
 
 const CreateCandidate = ({
@@ -25,12 +26,15 @@ const CreateCandidate = ({
   remove,
   errors,
   isFinalized,
+  previewPicturePath,
 }: Prop) => {
   // for hidden input
   const imgInputRef = useRef<HTMLInputElement>(null);
 
-  // for previewPicture
-  const [previewPicture, setPreviewPicture] = useState<string>('');
+  // for previewPicture ---
+  const [previewPicture, setPreviewPicture] = useState<string>(
+    previewPicturePath ?? ''
+  );
 
   // change file input value
   const handleFileInputChange = (
@@ -95,7 +99,7 @@ const CreateCandidate = ({
       </div>
 
       {/* for deleting candidate if there's 3 or more candidates but not 2 */}
-      {index > 1 && (
+      {!isFinalized && index > 1 && (
         <button
           className="px-6 py-2 top-0 right-0 text-2xl rounded-bl-lg hover:bg-red-500 hover:text-white text-red-500 border border-red-500  absolute"
           onClick={handleRemoveCandidate}
