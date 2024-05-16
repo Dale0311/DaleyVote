@@ -23,6 +23,30 @@ const CreateRoom = () => {
 
   return (
     <div className="sm-p-4 space-y-4">
+      <div className="text-lg font-body space-x-2">
+        <label htmlFor="roomTitle">Room title:</label>
+        <input
+          type="text"
+          name="roomTitle"
+          placeholder="2024 Election"
+          id="roomTitle"
+          className="border pl-2 rounded text-base"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
+      <div className="text-lg font-body space-x-2">
+        <label htmlFor="dateEnd">Ends in</label>
+        <input
+          type="date"
+          name="dateEnd"
+          placeholder="2024 Election"
+          id="dateEnd"
+          className="border pl-2 rounded text-base"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
       {/* Positions */}
       {toRenderDynamicPositionComponent}
 
@@ -66,6 +90,12 @@ const CreateRoom = () => {
 
 // first draft: simply -1 on positionCount
 // first try: bug when i remove the position component it doesn't render the position components in order using number
+
+// 05/16/2024:
 // done, i used string[] of unique id.
-// second draft: i can use useFormContext so that i can clean some mess up code
+// recode: i can use useFormContext so that i can clean some mess up code
+
+// create the rest of the inputs: title, date
+// title done
+// need to learn date inputs and value
 export default CreateRoom;
