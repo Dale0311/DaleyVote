@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import CreatePosition from '../components/CreateRoom/CreatePosition';
 import { useCreateRoom } from '../store/createRoomSlice';
+import Timepicker from '../components/Timepicker';
 
 const CreateRoom = () => {
   // to render dynamic position forms
@@ -35,10 +36,15 @@ const CreateRoom = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
-      <div className="text-lg font-body space-x-2">
-        <label htmlFor="dateEnd">Ends in</label>
+      {/* date */}
+      <div className="p-4 border rounded-lg bg-gray-50 flex items-center">
+        <label htmlFor="dateEnd">Ends in:</label>
+        <Timepicker />
+      </div>
+      {/* <div className="text-lg font-body space-x-2">
+        <label htmlFor="dateEnd">Ends in:</label>
         <input
-          type="date"
+          type="datetime-local"
           name="dateEnd"
           placeholder="2024 Election"
           id="dateEnd"
@@ -46,7 +52,7 @@ const CreateRoom = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-      </div>
+      </div> */}
       {/* Positions */}
       {toRenderDynamicPositionComponent}
 
