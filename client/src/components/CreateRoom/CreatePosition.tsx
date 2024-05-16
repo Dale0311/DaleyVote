@@ -83,7 +83,9 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
             type="text"
             disabled={isFinalized}
             className={`border rounded pl-2 ${
-              errors.title ? 'border-red-500 outline-none' : ''
+              errors.title
+                ? 'border-red-500 outline-none placeholder:text-red-500'
+                : ''
             } ${isFinalized ? 'cursor-not-allowed' : ''}`}
             {...register('title', { required: true })}
             placeholder="President"
