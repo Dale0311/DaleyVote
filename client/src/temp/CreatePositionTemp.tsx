@@ -9,12 +9,10 @@ import candidateObject from '../../utils/candidateObject';
 
 type Props = {
   index: number;
-  id: string;
-  setPositions: React.Dispatch<React.SetStateAction<string[]>>;
+  setPositionCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const CreatePosition = ({ id, index, setPositions }: Props) => {
-  // react-hook-form
+const CreatePosition = ({ index, setPositionCount }: Props) => {
   const {
     register,
     handleSubmit,
@@ -27,7 +25,7 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
   } = useForm<Position>({
     defaultValues: {
       title: '',
-      id: id,
+      id: crypto.randomUUID(),
       candidates: [candidateObject, candidateObject], // {name: "", img: null}
     },
   });
@@ -62,18 +60,16 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       return;
     }
 
+    console.log('diz new');
     addPosition(data);
     setIsFinalized(true);
   };
 
-  // if any errors at all in form
-  const errorExist = Boolean(errors?.candidates || errors?.title);
-
   return (
     <form
       className={`border p-4 space-y-4 relative ${
-        errorExist && 'border-red-500'
-      } ${!isFinalized ? 'shadow-lg ' : ''}`}
+        !isFinalized ? 'shadow-lg ' : ''
+      }`}
       onSubmit={handleSubmit(onHandleSubmit)}
     >
       <div className="text-lg font-body flex items-center justify-between">
@@ -89,25 +85,12 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
             placeholder="President"
           />
         </div>
-
-        {/* conditionally render remove ui if index > 0 */}
-        {index > 0 && !isFinalized && (
+        {index > 0 && (
           <div
             className="p-4 rounded-full border text-gray-500 hover:bg-red-500 hover:border-red-500 hover:text-white cursor-pointer"
             onClick={(e) => {
-              // stop event bubbling
               e.stopPropagation();
-
-              setPositions((prev) => {
-                const positionExist = prev.find((p) => p === id);
-                // if position does not exist return prev
-                if (!positionExist) {
-                  return prev;
-                }
-
-                // returns all position that is not equal to the current id
-                return prev.filter((p) => p !== positionExist);
-              });
+              setPositionCount((prev) => prev - 1);
             }}
           >
             <IoClose />
@@ -161,7 +144,6 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
         )}
 
         <div>
-          {/* conditionally render finalized and edit btn */}
           {isFinalized ? (
             <button
               type="button"

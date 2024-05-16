@@ -91,9 +91,9 @@ const CreateCandidate = ({
           type="text"
           disabled={isFinalized}
           placeholder="name"
-          className={`border p-1 rounded ${
-            isFinalized ? 'cursor-not-allowed' : ''
-          } `}
+          className={`border p-1 rounded outline-none ${
+            errors.candidates?.[index]?.name && 'border-red-500'
+          } ${isFinalized ? 'cursor-not-allowed' : ''} `}
           {...register(`candidates.${index}.name`, { required: true })}
         />
       </div>

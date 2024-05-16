@@ -1,38 +1,40 @@
 import { useState } from 'react';
-
+import { Position } from '../types';
 import CreatePosition from '../components/CreateRoom/CreatePosition';
+import positionDefaultValue from '../utils/positionDefaultObject';
 import { useCreateRoom } from '../store/createRoomSlice';
 
 const CreateRoom = () => {
   // to render dynamic position forms
-  const [positions, setPositions] = useState([
-    'acdd9c90-faac-429d-9a0d-39e83d50f242',
-  ]);
+  const [positionCount, setPositionCount] = useState(1);
 
-  const currentPosition = useCreateRoom((state) => state.positions);
+  const positions = useCreateRoom((state) => state.positions);
 
   // TBA
   const [title, setTitle] = useState('');
   const [dateEnd, setDateEnd] = useState('');
 
   // creating component base on the state
-  const toRenderDynamicPositionComponent = positions.map((pos, i) => (
-    <CreatePosition index={i} id={pos} key={pos} setPositions={setPositions} />
-  ));
-  const canSubmit = positions.length === currentPosition.length;
+  const toRenderDynamicPositionComponent = [];
+  for (let index = 0; index < positionCount; index++) {
+    toRenderDynamicPositionComponent.push(
+      <CreatePosition
+        key={index}
+        index={index}
+        setPositionCount={setPositionCount}
+      />
+    );
+  }
+  const canSubmit = positionCount === positions.length;
 
   return (
-    <div className="sm-p-4 space-y-4">
+    <div className="p-4 space-y-4">
       {/* Positions */}
       {toRenderDynamicPositionComponent}
 
       <button
         className="w-full mx-auto items-center p-3 border font-body text-gray-500 rounded hover:shadow-lg duration-300"
-        onClick={() =>
-          setPositions((prev) => {
-            return [...prev, crypto.randomUUID()];
-          })
-        }
+        onClick={() => setPositionCount((prev) => prev + 1)}
       >
         <p>Create Position</p>
       </button>
@@ -41,15 +43,13 @@ const CreateRoom = () => {
       <div className="flex justify-end">
         <button
           className={`flex space-x-1 items-center p-3 bg-blue-500 text-white hover:bg-blue-600 rounded font-body ${
-            !canSubmit
-              ? 'cursor-not-allowed disabled:hover:bg-blue-400 disabled:bg-blue-400'
-              : ''
+            !canSubmit ? 'cursor-not-allowed hover:bg-blue-400 bg-blue-400' : ''
           }`}
           // clear data in createRoom
           disabled={!canSubmit}
           onClick={(e) => {
             e.stopPropagation();
-            console.log(currentPosition);
+            console.log(positions);
           }}
         >
           <p>Create Room</p>
@@ -66,6 +66,5 @@ const CreateRoom = () => {
 
 // first draft: simply -1 on positionCount
 // first try: bug when i remove the position component it doesn't render the position components in order using number
-// done, i used string[] of unique id.
-// second draft: i can use useFormContext so that i can clean some mess up code
+
 export default CreateRoom;
