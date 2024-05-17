@@ -14,7 +14,10 @@ const CreateRoom = () => {
 
   // TBA
   const [title, setTitle] = useState('');
-  const [dateEnd, setDateEnd] = useState('');
+  const [duration, setDuration] = useState<{ hour: number; minutes: number }>({
+    hour: 0,
+    minutes: 0,
+  });
 
   // creating component base on the state
   const toRenderDynamicPositionComponent = positions.map((pos, i) => (
@@ -37,22 +40,9 @@ const CreateRoom = () => {
         />
       </div>
       {/* date */}
-      <div className="p-4 border rounded-lg bg-gray-50 flex items-center">
-        <label htmlFor="dateEnd">Ends in:</label>
-        <Timepicker />
+      <div className="">
+        <Timepicker duration={duration} setDuration={setDuration} />
       </div>
-      {/* <div className="text-lg font-body space-x-2">
-        <label htmlFor="dateEnd">Ends in:</label>
-        <input
-          type="datetime-local"
-          name="dateEnd"
-          placeholder="2024 Election"
-          id="dateEnd"
-          className="border pl-2 rounded text-base"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div> */}
       {/* Positions */}
       {toRenderDynamicPositionComponent}
 

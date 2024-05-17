@@ -1,82 +1,78 @@
 import { useState } from 'react';
 
-const Timepicker = () => {
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+type Prop = {
+  duration: { hour: number; minutes: number };
+  setDuration: React.Dispatch<
+    React.SetStateAction<{
+      hour: number;
+      minutes: number;
+    }>
+  >;
+};
 
-  const handleSave = () => {
-    alert(
-      `Time set to: ${String(hours).padStart(2, '0')}:${String(
-        minutes
-      ).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-    );
-  };
+const Timepicker = ({ duration, setDuration }: Prop) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
 
-  const handleCancel = () => {
-    setHours(0);
-    setMinutes(0);
-    setSeconds(0);
+    let val = value.replace(/^0+/, ''); // Remove leading zeros
+    //e.g: val = "01" or "0" -> "1" or ""
+    if (!val) {
+      setDuration((prev) => ({ ...prev, [name]: 0 }));
+      return;
+    } else {
+      const toNumVal = Number(val);
+      if (name === 'hour') {
+        if (toNumVal > 23 || toNumVal < 1) return;
+      } else {
+        if (toNumVal > 59 || toNumVal < 1) return;
+      }
+      setDuration((prev) => ({ ...prev, [name]: val }));
+    }
   };
 
   return (
-    <div className="bg-gray-800 p-6 rounded-lg text-white flex items-center">
-      <div className="flex flex-col items-center mb-4">
-        <label htmlFor="hours" className="mb-1">
-          Hours
-        </label>
-        <input
-          id="hours"
-          type="number"
-          min="0"
-          max="23"
-          value={hours}
-          onChange={(e) => setHours(Number(e.target.value))}
-          className="w-16 text-center p-2 rounded bg-gray-700 focus:outline-none"
-        />
+    <div className="bg-gray-50  rounded-lg text-white flex flex-col p-4 space-y-1">
+      <h1 className="text-gray-600 font-body text-xl">Duration:</h1>
+      <div className="flex items-center space-x-1 text-xl">
+        <div className="flex  text-gray-600  items-center">
+          <input
+            type="number"
+            min={0}
+            max={23}
+            value={duration.hour}
+            name="hour"
+            onChange={handleChange}
+            required
+            placeholder="hh"
+            className={`w-12 h-12 border-2  rounded bg-transparent outline-none text-center font-semibold border-gray-400 focus:border-gray-700 focus:text-gray-700 text-gray-400 transition spin-button-none `}
+          />
+        </div>
+        <span className="text-black">:</span>
+        <div className="flex  text-gray-600  items-center">
+          <input
+            type="number"
+            min={0}
+            max={59}
+            name="minutes"
+            value={duration.minutes}
+            onChange={handleChange}
+            placeholder="mm"
+            className={
+              'w-12 h-12 border-2  rounded bg-transparent outline-none text-center font-semibold border-gray-400 focus:border-gray-700 focus:text-gray-700 text-gray-400 transition spin-button-none'
+            }
+          />
+        </div>
       </div>
-      <div className="flex flex-col items-center mb-4">
-        <label htmlFor="minutes" className="mb-1">
-          Minutes
-        </label>
-        <input
-          id="minutes"
-          type="number"
-          min="0"
-          max="59"
-          value={minutes}
-          onChange={(e) => setMinutes(Number(e.target.value))}
-          className="w-16 text-center p-2 rounded bg-gray-700 focus:outline-none"
-        />
-      </div>
-      <div className="flex flex-col items-center mb-4">
-        <label htmlFor="seconds" className="mb-1">
-          Seconds
-        </label>
-        <input
-          id="seconds"
-          type="number"
-          min="0"
-          max="59"
-          value={seconds}
-          onChange={(e) => setSeconds(Number(e.target.value))}
-          className="w-16 text-center p-2 rounded bg-gray-700 focus:outline-none"
-        />
-      </div>
-      <div className="flex space-x-4 items-center">
-        <button
-          onClick={handleCancel}
-          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={handleSave}
-          className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
-        >
-          Save
-        </button>
-      </div>
+      {/* To be fix */}
+      {duration.minutes > 0 ? (
+        <span className="font-head text-gray-500">{`${duration.hour}h ${
+          duration.minutes
+        }${duration.minutes > 1 ? 'mins' : 'min'} `}</span>
+      ) : (
+        <span className="font-head text-gray-500">{`${duration.hour} ${
+          duration.hour > 1 ? 'hours' : 'hour'
+        }`}</span>
+      )}
     </div>
   );
 };
