@@ -1,7 +1,13 @@
 import { useState } from 'react';
+import { render } from 'react-dom';
+
+type Duration = {
+  hour: number;
+  minutes: number;
+};
 
 type Prop = {
-  duration: { hour: number; minutes: number };
+  duration: Duration;
   setDuration: React.Dispatch<
     React.SetStateAction<{
       hour: number;
@@ -29,6 +35,25 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
       setDuration((prev) => ({ ...prev, [name]: val }));
     }
   };
+
+  const toRenderTime: (duration: Duration) => string = (duration) => {
+    const { hour, minutes } = duration;
+    let toRender;
+    if (hour && minutes) {
+      if (hour && !minutes) {
+        toRender = `${hour} ${hour > 1 ? 'hours' : 'hour'}`;
+      } else if (!hour && minutes) {
+        toRender = `${minutes} ${minutes > 1 ? 'minutes' : 'minute'}`;
+      } else {
+        toRender = `${hour} h ${minutes} ${minutes > 1 ? 'mins' : 'min'}`;
+      }
+      return toRender;
+    }
+    return '';
+    // const toRenderTime = hour && !minutes ? `${hour}hours`
+  };
+
+  const toRenderT = toRenderTime(duration);
 
   return (
     <div className="bg-gray-50  rounded-lg text-white flex flex-col p-4 space-y-1">
@@ -64,17 +89,14 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
         </div>
       </div>
       {/* To be fix */}
-      {duration.minutes > 0 ? (
-        <span className="font-head text-gray-500">{`${duration.hour}h ${
-          duration.minutes
-        }${duration.minutes > 1 ? 'mins' : 'min'} `}</span>
-      ) : (
-        <span className="font-head text-gray-500">{`${duration.hour} ${
-          duration.hour > 1 ? 'hours' : 'hour'
-        }`}</span>
-      )}
+      <span className="font-head text-gray-500">{toRenderT}</span>
     </div>
   );
 };
+// to improve duration:
+// conditional text render
+// how to use it as a countdown
+
+// next need to initialize my cloudinary set up again
 
 export default Timepicker;
