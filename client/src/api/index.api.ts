@@ -7,7 +7,7 @@ export const api = axios.create({
 
 // get signature for authenticated upload
 export const getSignature = async (folder: string) => {
-  const res = await axios.post('/get_signature', {
+  const res = await api.post('/room/get-signature', {
     folder,
   });
 
@@ -16,13 +16,17 @@ export const getSignature = async (folder: string) => {
 
 // upload img to cloudinary
 export const uploadImg = async (data: FormData) => {
-  const res = await api.post(
-    `https://api.cloudinary.com/v1_1/${
-      import.meta.env.VITE_MONGO_CLOUD_NAME
-    }/image/upload`,
-    data
-  );
-  return res.data;
+  try {
+    const res = await api.post(
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_CLOUD_NAME
+      }/image/upload`,
+      data
+    );
+    return res.data.secure_url;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 api.interceptors.request.use((config) => {

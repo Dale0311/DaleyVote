@@ -7,14 +7,16 @@ import cookieParser from 'cookie-parser';
 // local imports
 import connectDb from './config/mongoDb.js';
 import userRoute from './routes/user.route.js';
+import roomRoute from './routes/room.route.js';
 import { errorHandler, requireToken } from './middlewares/index.middleware.js';
 import { corsOptions } from './config/cors.js';
 import { app, httpServer } from './socket/index.socket.js';
+import { configCloudinary } from './config/cloudinary.js';
 
 const PORT = 5300;
 dotenv.config();
 connectDb();
-
+configCloudinary();
 // middlewares
 // app.use(cors(corsOptions));
 app.use(cors());
@@ -24,12 +26,8 @@ app.use(cookieParser());
 // routes
 app.use('/api/v1/user', userRoute);
 
-app.use(requireToken);
-app.get('/api/v1/test', (req, res) => {
-  console.log(req?.currentUser);
-  res.json({ message: 'hey' });
-});
-// app.use('/api/v1/room', roomRoute);
+// app.use(requireToken);
+app.use('/api/v1/room', roomRoute);
 app.use(errorHandler);
 
 // listen

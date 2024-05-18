@@ -29,8 +29,7 @@ const CreateRoom = () => {
   const canSubmit = Boolean(
     positions.length === currentPosition.length &&
       title &&
-      duration.hour &&
-      duration.minutes
+      (duration.hour || duration.minutes)
   );
 
   // handle submit
@@ -44,24 +43,42 @@ const CreateRoom = () => {
     // GOAL: every file must upload in cloudinary and store imgUrl to candidate object
     // steps:
     // get signature from our backend - 1h exp
-    const { apiKey, timestamp, signature } = await getSignature('images');
+    const { apiKey, timestamp, signature } = await getSignature(
+      'candidates_picture'
+    );
 
     // map every candidate img to be upload to cloudinary
-    currentPosition.map((pos) => {
-      pos.candidates.map((candidate) => {
-        const data = new FormData();
-        data.append('file', candidate.img || new Blob());
-        data.append('api_key', apiKey);
-        data.append('timestamp', timestamp);
-        data.append('signature', signature);
-        data.append('folder', 'images');
-        const uploadedImg = uploadImg(data);
-        console.log(uploadImg);
 
-        // return {...candidate};
-      });
-    });
-    // store img Url to candidate obj
+    const processPos = async () => {
+      const positions = Promise.all(
+        currentPosition.map(async (pos) => {
+          // for every candidates image:
+          return Promise.all(
+            pos.candidates.map(async (candidate) => {
+              // create formData and fill the required data
+              const data = new FormData();
+
+              data.append('file', candidate.img || new Blob());
+              data.append('api_key', apiKey);
+              data.append('timestamp', timestamp);
+              data.append('signature', signature);
+              data.append('folder', 'candidates_picture');
+
+              // upload the formData
+              const uploadImgUrl: string = await uploadImg(data);
+
+              // store img Url to candidate obj
+              return { ...candidate, img: uploadImgUrl };
+            })
+          );
+        })
+      );
+      return positions;
+    };
+    const p = await processPos().then((val) => val);
+    console.log('0------------------------0');
+    console.log(p);
+    console.log('0------------------------0');
   };
 
   return (

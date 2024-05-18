@@ -9,5 +9,5 @@ const io = new Server(httpServer, { cors: { origin: whiteList } });
 
 // socket logic goes here
 io.on('connection', (socket) => {
-  console.log(`Welcome user:${socket.id}`);
+  // console.log(`Welcome user:${socket.id}`);
 });
