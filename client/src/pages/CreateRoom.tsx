@@ -38,17 +38,13 @@ const CreateRoom = () => {
   ) => {
     e.preventDefault();
     if (!canSubmit) return;
-    const obj = { title, duration, votingDetails: currentPosition };
 
-    // GOAL: every file must upload in cloudinary and store imgUrl to candidate object
-    // steps:
     // get signature from our backend - 1h exp
     const { apiKey, timestamp, signature } = await getSignature(
       'candidates_picture'
     );
 
-    // map every candidate img to be upload to cloudinary
-
+    // first draft of uploading
     const processPos = async () => {
       const positions = Promise.all(
         currentPosition.map(async (pos) => {
@@ -75,10 +71,10 @@ const CreateRoom = () => {
       );
       return positions;
     };
-    const p = await processPos().then((val) => val);
-    console.log('0------------------------0');
-    console.log(p);
-    console.log('0------------------------0');
+
+    const positions = await processPos().then((val) => val);
+    const obj = { title, duration, votingDetails: positions };
+    console.log(obj);
   };
 
   return (
@@ -147,4 +143,16 @@ const CreateRoom = () => {
 // create the rest of the inputs: title, date
 // title done
 // need to learn date inputs and value
+// done
+
+// 05/19/2024:
+// second draft of upload img: upload from backend, each finalize will trigger upload.
+// things to do:
+// need to learn uploading from backend
+
+// rafactors: delete generate_signature. @api, @current, @controller, @routes
+
+// tags to remove/modify: just highlight each one and press ctrl + d
+// @current: processPos , getSignature , uploadImg
+// @CreatePosition: onHandleSubmit - each click will trigger upload img from backend
 export default CreateRoom;

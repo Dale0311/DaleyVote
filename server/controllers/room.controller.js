@@ -28,3 +28,8 @@ export const generateSignature = (req, res, next) => {
 
   return res.json({ timestamp, apiKey, signature });
 };
+
+export const uploadImg = async (req, res, next) => {
+  console.log(req.body);
+  res.sendStatus(200);
+};

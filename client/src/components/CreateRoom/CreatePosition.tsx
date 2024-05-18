@@ -65,6 +65,25 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
     addPosition(data);
     setIsFinalized(true);
   };
+  // const onHandleSubmit: SubmitHandler<Position> = (data) => {
+  //   // we cannot finalized position if position title already exist in our store.
+  //   const positionExist = currentPositions.find(
+  //     (pos) => pos.title === data.title
+  //   );
+  //   if (positionExist) {
+  //     setError(
+  //       'title',
+  //       {
+  //         message: `Position: ${getValues('title')} already exist`,
+  //       },
+  //       { shouldFocus: true }
+  //     );
+  //     return;
+  //   }
+
+  //   addPosition(data);
+  //   setIsFinalized(true);
+  // };
 
   // if any errors at all in form
   const errorExist = Boolean(errors?.candidates || errors?.title);
