@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { render } from 'react-dom';
-
 type Duration = {
   hour: number;
   minutes: number;
@@ -39,7 +36,7 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
   const toRenderTime: (duration: Duration) => string = (duration) => {
     const { hour, minutes } = duration;
     let toRender;
-    if (hour && minutes) {
+    if (hour || minutes) {
       if (hour && !minutes) {
         toRender = `${hour} ${hour > 1 ? 'hours' : 'hour'}`;
       } else if (!hour && minutes) {
@@ -50,14 +47,16 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
       return toRender;
     }
     return '';
-    // const toRenderTime = hour && !minutes ? `${hour}hours`
   };
 
   const toRenderT = toRenderTime(duration);
 
   return (
     <div className="bg-gray-50  rounded-lg text-white flex flex-col p-4 space-y-1">
-      <h1 className="text-gray-600 font-body text-xl">Duration:</h1>
+      <div className="flex space-x-2 items-center">
+        <h1 className="text-gray-600 font-body">Duration:</h1>
+        <span className="font-head text-gray-500">{toRenderT}</span>
+      </div>
       <div className="flex items-center space-x-1 text-xl">
         <div className="flex  text-gray-600  items-center">
           <input
@@ -69,7 +68,7 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
             onChange={handleChange}
             required
             placeholder="hh"
-            className={`w-12 h-12 border-2  rounded bg-transparent outline-none text-center font-semibold border-gray-400 focus:border-gray-700 focus:text-gray-700 text-gray-400 transition spin-button-none `}
+            className={`w-12 h-12 border-2  rounded bg-transparent outline-none text-center font-semibold border-gray-700 focus:border-blue-500 focus:text-blue-500 text-gray-700 transition spin-button-none `}
           />
         </div>
         <span className="text-black">:</span>
@@ -82,14 +81,11 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
             value={duration.minutes}
             onChange={handleChange}
             placeholder="mm"
-            className={
-              'w-12 h-12 border-2  rounded bg-transparent outline-none text-center font-semibold border-gray-400 focus:border-gray-700 focus:text-gray-700 text-gray-400 transition spin-button-none'
-            }
+            className={`w-12 h-12 border-2  rounded bg-transparent outline-none text-center font-semibold border-gray-700 focus:border-blue-500 focus:text-blue-500 text-gray-700 transition spin-button-none `}
           />
         </div>
       </div>
       {/* To be fix */}
-      <span className="font-head text-gray-500">{toRenderT}</span>
     </div>
   );
 };

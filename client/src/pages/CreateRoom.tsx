@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CreatePosition from '../components/CreateRoom/CreatePosition';
 import { useCreateRoom } from '../store/createRoomSlice';
 import Timepicker from '../components/Timepicker';
+import { getSignature, uploadImg } from '../api/index.api';
 
 const CreateRoom = () => {
   // to render dynamic position forms
@@ -23,7 +24,45 @@ const CreateRoom = () => {
   const toRenderDynamicPositionComponent = positions.map((pos, i) => (
     <CreatePosition index={i} id={pos} key={pos} setPositions={setPositions} />
   ));
-  const canSubmit = positions.length === currentPosition.length;
+
+  // make sure that all state have truthy value
+  const canSubmit = Boolean(
+    positions.length === currentPosition.length &&
+      title &&
+      duration.hour &&
+      duration.minutes
+  );
+
+  // handle submit
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (!canSubmit) return;
+    const obj = { title, duration, votingDetails: currentPosition };
+
+    // GOAL: every file must upload in cloudinary and store imgUrl to candidate object
+    // steps:
+    // get signature from our backend - 1h exp
+    const { apiKey, timestamp, signature } = await getSignature('images');
+
+    // map every candidate img to be upload to cloudinary
+    currentPosition.map((pos) => {
+      pos.candidates.map((candidate) => {
+        const data = new FormData();
+        data.append('file', candidate.img || new Blob());
+        data.append('api_key', apiKey);
+        data.append('timestamp', timestamp);
+        data.append('signature', signature);
+        data.append('folder', 'images');
+        const uploadedImg = uploadImg(data);
+        console.log(uploadImg);
+
+        // return {...candidate};
+      });
+    });
+    // store img Url to candidate obj
+  };
 
   return (
     <div className="sm-p-4 space-y-4">
@@ -67,10 +106,7 @@ const CreateRoom = () => {
           }`}
           // clear data in createRoom
           disabled={!canSubmit}
-          onClick={(e) => {
-            e.stopPropagation();
-            console.log(currentPosition);
-          }}
+          onClick={(e) => handleSubmit(e)}
         >
           <p>Create Room</p>
         </button>

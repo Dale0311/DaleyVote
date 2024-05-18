@@ -8,7 +8,7 @@ export type CurrentUser<T> = {
 };
 
 export type Candidate = {
-  img: File | null;
+  img: Blob | null;
   name: string;
 };
 
