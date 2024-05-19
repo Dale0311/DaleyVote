@@ -155,4 +155,7 @@ const CreateRoom = () => {
 // tags to remove/modify: just highlight each one and press ctrl + d
 // @current: processPos , getSignature , uploadImg
 // @CreatePosition: onHandleSubmit - each click will trigger upload img from backend
+
+// 05/20/2024 - continue yesterday works.
+// export button types so that each finalize click i will be submitting it over backend to send to cloudinary
 export default CreateRoom;
