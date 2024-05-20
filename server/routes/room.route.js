@@ -1,12 +1,12 @@
 import express from 'express';
 import {
   createRoom,
-  generateSignature,
+  uploadCandidatesImage,
 } from '../controllers/room.controller.js';
 
 const router = express.Router();
 
 router.post('/', createRoom);
-router.post('/get-signature', generateSignature);
+router.post('/upload-candidates-image', uploadCandidatesImage);
 
 export default router;

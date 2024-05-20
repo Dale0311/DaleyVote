@@ -1,1 +1,1 @@
-export default { img: null, name: '' };
+export default { img: '', name: '' };

@@ -8,9 +8,10 @@ export type CurrentUser<T> = {
 };
 
 export type Candidate = {
-  img: Blob | null;
+  img: ArrayBuffer | string;
   name: string;
 };
+i need a way for me to store my uploaded img properties in img. which are: {public_id, secure_url}
 
 export type Position = {
   id: string;

@@ -16,7 +16,7 @@ type Prop = {
   remove: UseFieldArrayRemove;
   errors: FieldErrors<Position>;
   isFinalized: boolean;
-  previewPicturePath: string;
+  previewPicturePath: ArrayBuffer | string;
 };
 
 const CreateCandidate = ({
@@ -32,8 +32,8 @@ const CreateCandidate = ({
   const imgInputRef = useRef<HTMLInputElement>(null);
 
   // for previewPicture ---
-  const [previewPicture, setPreviewPicture] = useState<string>(
-    previewPicturePath ?? ''
+  const [previewPicture, setPreviewPicture] = useState<string | ArrayBuffer>(
+    previewPicturePath
   );
 
   // change file input value
@@ -41,11 +41,21 @@ const CreateCandidate = ({
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0] || null;
+
+    // to upload in express backend
+    // const pictureToBinary;
     if (file) {
-      const previewPictureUrl = URL.createObjectURL(file);
-      setPreviewPicture(previewPictureUrl);
+      const reader = new FileReader();
+
+      // reader
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        if (reader.result) {
+          setPreviewPicture(reader.result);
+          setValue(`candidates.${index}.img`, reader.result);
+        }
+      };
     }
-    setValue(`candidates.${index}.img`, file);
   };
 
   // remove the candidate
@@ -76,7 +86,7 @@ const CreateCandidate = ({
             isFinalized ? 'cursor-not-allowed' : 'cursor-pointer'
           }`}
           onClick={() => (!isFinalized ? imgInputRef.current?.click() : '')}
-          src={previewPicture}
+          src={typeof previewPicture === 'string' ? previewPicture : ''}
         />
       ) : (
         <div

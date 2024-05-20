@@ -6,6 +6,7 @@ import { useCreateRoom } from '../../store/createRoomSlice';
 import { Position } from '../../types';
 import CreateCandidate from './CreateCandidate';
 import candidateObject from '../../utils/candidateObject';
+import { uploadImg } from '../../api/index.api';
 
 type Props = {
   index: number;
@@ -46,8 +47,9 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
   const removePosition = useCreateRoom((state) => state.removePosition);
 
   // on handle finalized button
-  const onHandleSubmit: SubmitHandler<Position> = (data) => {
+  const onHandleSubmit: SubmitHandler<Position> = async (data) => {
     // we cannot finalized position if position title already exist in our store.
+
     const positionExist = currentPositions.find(
       (pos) => pos.title === data.title
     );
@@ -62,7 +64,9 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       return;
     }
 
-    addPosition(data);
+    const updatedData = await uploadImg(data.candidates);
+
+    addPosition(updatedData);
     setIsFinalized(true);
   };
   // const onHandleSubmit: SubmitHandler<Position> = (data) => {
@@ -147,7 +151,7 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       <div className="space-y-2">
         {fields.map((candidate, index) => {
           const file = candidate?.img;
-          const previewPicturePath = file ? URL.createObjectURL(file) : '';
+          const previewPicturePath = file;
           return (
             <CreateCandidate
               isFinalized={isFinalized}

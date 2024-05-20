@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CreatePosition from '../components/CreateRoom/CreatePosition';
 import { useCreateRoom } from '../store/createRoomSlice';
 import Timepicker from '../components/Timepicker';
+import { getSignature, uploadImg } from '../api/index.api';
 
 const CreateRoom = () => {
   // to render dynamic position forms
@@ -38,9 +39,45 @@ const CreateRoom = () => {
     e.preventDefault();
     if (!canSubmit) return;
 
-    // to upload to server
-    const toUploadObj = { title, duration, votingDetails: currentPosition };
-    console.log(toUploadObj);
+    // get signature from our backend - 1h exp
+    const { apiKey, timestamp, signature } = await getSignature(
+      'candidates_picture'
+    );
+
+    // first draft of uploading
+    const processPos = async () => {
+      const positions = Promise.all(
+        currentPosition.map(async (pos) => {
+          // for every candidates image:
+          return Promise.all(
+            pos.candidates.map(async (candidate) => {
+              // create formData and fill the required data
+              const data = new FormData();
+
+              data.append('file', candidate.img || new Blob());
+              data.append('api_key', apiKey);
+              data.append('timestamp', timestamp);
+              data.append('signature', signature);
+              data.append('folder', 'candidates_picture');
+
+              // upload the formData
+              const uploadedImgUrl: string = await uploadImg(data);
+
+              // store img Url to candidate obj
+              return { ...candidate, img: uploadedImgUrl };
+            })
+          );
+        })
+      );
+      return positions;
+    };
+
+    // 2-3 seconds at best if uploading two images - slow
+    console.time('upload');
+    const positions = await processPos().then((val) => val);
+    console.timeEnd('upload');
+    const obj = { title, duration, votingDetails: positions };
+    console.log(obj);
   };
 
   return (
