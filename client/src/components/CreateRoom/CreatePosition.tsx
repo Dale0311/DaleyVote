@@ -64,7 +64,8 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       return;
     }
 
-    const updatedData = await uploadImg(data.candidates);
+    const updatedCandidates = await uploadImg(data.candidates);
+    const updatedData = { ...data, img: updatedCandidates };
 
     addPosition(updatedData);
     setIsFinalized(true);

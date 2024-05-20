@@ -40,7 +40,6 @@ const CreateRoom = () => {
 
     // to upload to server
     const toUploadObj = { title, duration, votingDetails: currentPosition };
-    console.log(toUploadObj);
   };
 
   return (
