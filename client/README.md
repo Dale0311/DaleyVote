@@ -1,30 +1,41 @@
-# React + TypeScript + Vite
+### legacy todos before i use md
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##### to be solve today!
 
-Currently, two official plugins are available:
+- after finalized user can edit the position - done
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##### to be solve bukas.
 
-## Expanding the ESLint configuration
+- find a way to remove position when the index is > 0
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+##### first draft: simply -1 on positionCount
 
-- Configure the top-level `parserOptions` property like this:
+first try: there's bug when i remove the position component it doesn't render the position components in order using numbe
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+##### 05/16/2024:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- done, i used string[] of unique id.
+
+- <b>future refactor:</b> i can use useFormContext so that i can clean some mess up code
+
+- create the rest of the inputs: title, date
+  title done
+  need to learn date inputs and value
+  done
+- 05/19/2024: second draft of upload img: upload from backend, each finalize will trigger upload.
+  things to do:
+  - need to learn uploading from backend
+  - rafactors: delete generate_signature. @api, @current, @controller, @route
+  - tags to remove/modify: just highlight each one and press ctrl + d
+  - @current: processPos , getSignature , uploadImg
+  - @CreatePosition: onHandleSubmit - each click will trigger upload img from backend
+
+### TODO 05/20/2024 - and continue yesterday todos.
+
+1. Remove: upload images from client.
+   The reason is that it is slow.
+
+2. Refactor: implement backend upload of images.
+
+3. Refactor: upload image of candidates of each position every click on finalized button.
+   The current implementation of uploading images as of (05/20/2024). Is that it uploads all the images all at once on every position when the user click the "create room" button.

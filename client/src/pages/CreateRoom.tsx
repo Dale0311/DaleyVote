@@ -61,10 +61,10 @@ const CreateRoom = () => {
               data.append('folder', 'candidates_picture');
 
               // upload the formData
-              const uploadImgUrl: string = await uploadImg(data);
+              const uploadedImgUrl: string = await uploadImg(data);
 
               // store img Url to candidate obj
-              return { ...candidate, img: uploadImgUrl };
+              return { ...candidate, img: uploadedImgUrl };
             })
           );
         })
@@ -72,7 +72,9 @@ const CreateRoom = () => {
       return positions;
     };
 
+    console.time('upload');
     const positions = await processPos().then((val) => val);
+    console.timeEnd('upload');
     const obj = { title, duration, votingDetails: positions };
     console.log(obj);
   };
@@ -128,34 +130,6 @@ const CreateRoom = () => {
   );
 };
 
-// to be solve today!
-// after finalized user can edit the position - done
-// to be solve bukas.
-// find a way to remove position when is > 1
 
-// first draft: simply -1 on positionCount
-// first try: bug when i remove the position component it doesn't render the position components in order using number
 
-// 05/16/2024:
-// done, i used string[] of unique id.
-// recode: i can use useFormContext so that i can clean some mess up code
-
-// create the rest of the inputs: title, date
-// title done
-// need to learn date inputs and value
-// done
-
-// 05/19/2024:
-// second draft of upload img: upload from backend, each finalize will trigger upload.
-// things to do:
-// need to learn uploading from backend
-
-// rafactors: delete generate_signature. @api, @current, @controller, @routes
-
-// tags to remove/modify: just highlight each one and press ctrl + d
-// @current: processPos , getSignature , uploadImg
-// @CreatePosition: onHandleSubmit - each click will trigger upload img from backend
-
-// 05/20/2024 - continue yesterday works.
-// export button types so that each finalize click i will be submitting it over backend to send to cloudinary
 export default CreateRoom;
