@@ -3,6 +3,10 @@ import { useState } from 'react';
 import CreatePosition from '../components/CreateRoom/CreatePosition';
 import { useCreateRoom } from '../store/createRoomSlice';
 import Timepicker from '../components/Timepicker';
+import { formatDateToISO } from '../utils/formatDate';
+import { createRoom } from '../api/index.api';
+import { useCurrentUserStore } from '../store/currentUserSlice';
+import { isCurrentUserType } from '../utils/typeSafeDestructureOfCurrentUser';
 
 const CreateRoom = () => {
   // to render dynamic position forms
@@ -11,11 +15,12 @@ const CreateRoom = () => {
   ]);
 
   const currentPosition = useCreateRoom((state) => state.positions);
+  const currentUser = useCurrentUserStore((state) => state.currentUser);
 
   // TBA
   const [title, setTitle] = useState('');
-  const [duration, setDuration] = useState<{ hour: number; minutes: number }>({
-    hour: 0,
+  const [duration, setDuration] = useState<{ hours: number; minutes: number }>({
+    hours: 0,
     minutes: 0,
   });
 
@@ -28,8 +33,11 @@ const CreateRoom = () => {
   const canSubmit = Boolean(
     positions.length === currentPosition.length &&
       title &&
-      (duration.hour || duration.minutes)
+      (duration.hours || duration.minutes)
   );
+
+  // returns currentUserId or falsy value
+  const currentUserId = isCurrentUserType(currentUser) ? currentUser._id : '';
 
   // handle submit
   const handleSubmit = async (
@@ -38,8 +46,16 @@ const CreateRoom = () => {
     e.preventDefault();
     if (!canSubmit) return;
 
-    // to upload to server
-    const toUploadObj = { title, duration, votingDetails: currentPosition };
+    // to upload configData to server
+    const formattedDuration = formatDateToISO(duration);
+    const configRoomData = {
+      title,
+      expiration: formattedDuration,
+      votingDetails: currentPosition,
+      createdById: currentUserId,
+    };
+
+    createRoom(configRoomData);
   };
 
   return (
@@ -58,10 +74,10 @@ const CreateRoom = () => {
       </div>
       {/* date */}
       <div className="">
-        <Timepicker duration={duration} setDuration={setDuration} />
+        <Timepicker key={'2'} duration={duration} setDuration={setDuration} />
       </div>
       {/* Positions */}
-      {toRenderDynamicPositionComponent}
+      <div>{toRenderDynamicPositionComponent}</div>
 
       <button
         className="w-full mx-auto items-center p-3 border font-body text-gray-500 rounded hover:shadow-lg duration-300"

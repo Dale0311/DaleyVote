@@ -1,9 +1,26 @@
 import cloudinary from '../config/cloudinary.js';
 import pLimit from 'p-limit';
+import { generateCode } from '../utils/generateCode.js';
+import Room from '../models/Rooms.model.js';
 
 const limit = pLimit(2);
-export const createRoom = (req, res) => {
-  const { title, participant, createdById, duration } = req.body;
+export const createRoom = async (req, res, next) => {
+  const { title, createdById, expiration, votingDetails } = req.body;
+
+  if (!title || !createdById || !expiration || !votingDetails) {
+    res.status(400);
+    next(new Error('Bad request'));
+  }
+  const code = generateCode();
+
+  try {
+    const roomConfig = { title, createdById, expiration, votingDetails, code };
+    const response = await Room.create(roomConfig);
+    res.json({ code: response.code });
+  } catch (error) {
+    res.status(500);
+    next(new Error('Failed to save room config'));
+  }
 };
 
 export const uploadCandidatesImage = async (req, res) => {

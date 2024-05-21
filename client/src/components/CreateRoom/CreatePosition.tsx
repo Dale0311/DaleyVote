@@ -32,7 +32,7 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       candidates: [candidateObject, candidateObject], // {name: "", img: null}
     },
   });
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [isFinalized, setIsFinalized] = useState<boolean>(false);
 
   // dynamically create candidate component
@@ -63,12 +63,17 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       );
       return;
     }
-
-    const updatedCandidates = await uploadImg(data.candidates);
-    const updatedData = { ...data, img: updatedCandidates };
-
-    addPosition(updatedData);
-    setIsFinalized(true);
+    try {
+      setLoading(true);
+      const updatedCandidates = await uploadImg(data.candidates);
+      const updatedData = { ...data, candidates: updatedCandidates };
+      addPosition(updatedData);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsFinalized(true);
+      setLoading(false);
+    }
   };
   // const onHandleSubmit: SubmitHandler<Position> = (data) => {
   //   // we cannot finalized position if position title already exist in our store.
@@ -174,12 +179,15 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
           <MdOutlineDone />
         </span>
       )}
-
+      {/* loading false, isFinalized false*/}
       <div className="flex justify-end space-x-2">
-        {!isFinalized && (
+        {!isFinalized && !loading && (
           <button
             type="button"
-            className="py-2 px-4 rounded border"
+            className={`py-2 px-4 rounded border ${
+              loading ? 'cursor-not-allowed' : ''
+            }`}
+            disabled={loading}
             onClick={() => append(candidateObject)}
           >
             Add Candidate
@@ -215,7 +223,14 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
               Edit
             </button>
           ) : (
-            <button className="py-2 px-4 rounded border">Finalize</button>
+            <button
+              className={`py-2 px-4 rounded border ${
+                loading ? 'cursor-not-allowed' : ''
+              }`}
+              disabled={loading}
+            >
+              {loading ? 'Finalizing...' : 'Finalize'}
+            </button>
           )}
         </div>
       </div>

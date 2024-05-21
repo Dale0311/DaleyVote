@@ -1,5 +1,5 @@
 type Duration = {
-  hour: number;
+  hours: number;
   minutes: number;
 };
 
@@ -7,7 +7,7 @@ type Prop = {
   duration: Duration;
   setDuration: React.Dispatch<
     React.SetStateAction<{
-      hour: number;
+      hours: number;
       minutes: number;
     }>
   >;
@@ -20,11 +20,11 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
     let val = value.replace(/^0+/, ''); // Remove leading zeros
     //e.g: val = "01" or "0" -> "1" or ""
     if (!val) {
-      setDuration((prev) => ({ ...prev, [name]: 0 }));
+      setDuration((prev) => ({ ...prev, [name]: '0' }));
       return;
     } else {
       const toNumVal = Number(val);
-      if (name === 'hour') {
+      if (name === 'hours') {
         if (toNumVal > 23 || toNumVal < 1) return;
       } else {
         if (toNumVal > 59 || toNumVal < 1) return;
@@ -34,15 +34,15 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
   };
 
   const toRenderTime: (duration: Duration) => string = (duration) => {
-    const { hour, minutes } = duration;
+    const { hours, minutes } = duration;
     let toRender;
-    if (hour || minutes) {
-      if (hour && !minutes) {
-        toRender = `${hour} ${hour > 1 ? 'hours' : 'hour'}`;
-      } else if (!hour && minutes) {
+    if (hours || minutes) {
+      if (hours && !minutes) {
+        toRender = `${hours} ${hours > 1 ? 'hours' : 'hour'}`;
+      } else if (!hours && minutes) {
         toRender = `${minutes} ${minutes > 1 ? 'minutes' : 'minute'}`;
       } else {
-        toRender = `${hour} h ${minutes} ${minutes > 1 ? 'mins' : 'min'}`;
+        toRender = `${hours} h ${minutes} ${minutes > 1 ? 'mins' : 'min'}`;
       }
       return toRender;
     }
@@ -63,8 +63,8 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
             type="number"
             min={0}
             max={23}
-            value={duration.hour}
-            name="hour"
+            value={duration.hours}
+            name="hours"
             onChange={handleChange}
             required
             placeholder="hh"

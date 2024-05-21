@@ -55,3 +55,30 @@ The current implementation of uploading images as of (05/20/2024). Is that it up
 
 - <b>done @12:20pm</b>
   remove the upload api from client. and replaced it with backend upload api. it's easier said than done because i troubleshoot on how to pass file pictures from my client to my backend. took me about 3-4hrs. :'/ feels bad man. to be continue tommorow
+
+### TODO 05/21/2024 - continuation of todos 05/20/2024 6:30pm
+
+i need a way for me to store my uploaded img properties in img. which are: {public_id, secure_url}
+its workin, but i need to create a way for user to delete the img whenever the user click the "edit" button
+
+- <b>Dinner Break: 7:20pm</b>
+  done refactoring the "finalized" button. next thing todo is storing the data to my backend and creating a socket io.
+
+- <b>Continuation: 8:20pm</b>
+  so at this point configuring the room is done, the next challenge that i need to fix are:
+
+1. send configData to create-room endpoint
+   it will save the data to my server and it will return a accessCode.
+
+2. configure socket
+   it will get all rooms from my server and it will create room for every room object that is coming from my server
+
+3. create a component for room that accept accessCode and will find that using emit. if find the server will add the client to the array of user.
+
+- <b>Break: 9:40pm</b>
+- <b>continuation: 10:10pm</b>
+- <b>done @12:00pm</b>
+  I refactor createRoom controller. now it accepts all the required properties that it needed. and from my server im generating the code that is needed aswell for creating room. Lastly, i enable my token authRequired so that i get the currentUserId when submitting the form data. i struggle a lot destructuring the currentUser because i don't know how to typesafe the currentUser. i debug it first and luckily i found a way. i need to get better writing in typescript.
+  <br/>
+  <br/>
+  now i can submit the form data(room config) to my server and my server will process that request and save the form data to my database and will return the code that the client needs to access room component @client

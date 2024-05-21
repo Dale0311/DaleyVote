@@ -9,12 +9,12 @@ const genericType = {
 //candidate for positionSchema
 const candidate = new Schema({
   name: genericType,
-  imageUrl: genericType,
+  img: { public_id: String, secure_url: String },
 });
 
 // position for roomSchema
 const position = new Schema({
-  name: genericType,
+  title: genericType,
   candidates: [candidate],
   totalVotes: Number,
 });
