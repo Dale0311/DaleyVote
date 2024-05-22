@@ -6,7 +6,7 @@ import Timepicker from '../components/Timepicker';
 import { formatDateToISO } from '../utils/formatDate';
 import { createRoom } from '../api/index.api';
 import { useCurrentUserStore } from '../store/currentUserSlice';
-import { isCurrentUserType } from '../utils/typeSafeDestructureOfCurrentUser';
+import { typeSafeDestructureOfCurrentUser } from '../utils/typeSafeDestructureOfCurrentUser';
 
 const CreateRoom = () => {
   // to render dynamic position forms
@@ -14,15 +14,18 @@ const CreateRoom = () => {
     'acdd9c90-faac-429d-9a0d-39e83d50f242',
   ]);
 
-  const currentPosition = useCreateRoom((state) => state.positions);
-  const currentUser = useCurrentUserStore((state) => state.currentUser);
-
   // TBA
   const [title, setTitle] = useState('');
   const [duration, setDuration] = useState<{ hours: number; minutes: number }>({
     hours: 0,
     minutes: 0,
   });
+
+  const currentPosition = useCreateRoom((state) => state.positions);
+  const currentUser = useCurrentUserStore((state) => state.currentUser);
+
+  const { _id, createdAt, email, imageUrl, updatedAt, username } =
+    typeSafeDestructureOfCurrentUser(currentUser) ?? {};
 
   // creating component base on the state
   const toRenderDynamicPositionComponent = positions.map((pos, i) => (
@@ -35,9 +38,6 @@ const CreateRoom = () => {
       title &&
       (duration.hours || duration.minutes)
   );
-
-  // returns currentUserId or falsy value
-  const currentUserId = isCurrentUserType(currentUser) ? currentUser._id : '';
 
   // handle submit
   const handleSubmit = async (
@@ -52,11 +52,12 @@ const CreateRoom = () => {
       title,
       expiration: formattedDuration,
       votingDetails: currentPosition,
-      createdById: currentUserId,
+      createdById: _id,
     };
 
     createRoom(configRoomData);
   };
+  console.log(_id, createdAt, email, imageUrl, updatedAt, username);
 
   return (
     <div className="sm-p-4 space-y-4">

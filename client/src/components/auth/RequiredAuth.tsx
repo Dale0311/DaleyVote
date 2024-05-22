@@ -16,7 +16,6 @@ const RequiredAuth = () => {
 
   if (token) {
     const decoded: CurrentUser<string> = jwtDecode(token);
-    console.log(decoded);
     setCurrentUser(decoded);
   }
   return <>{token ? <Outlet /> : <Navigate to={'/signin'} />}</>;

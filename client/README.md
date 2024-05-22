@@ -82,3 +82,17 @@ its workin, but i need to create a way for user to delete the img whenever the u
   <br/>
   <br/>
   now i can submit the form data(room config) to my server and my server will process that request and save the form data to my database and will return the code that the client needs to access room component @client
+
+### TODO 05/21/2024
+
+1. typesafe destructure the currentUser data.
+
+```js
+export const typeSafeDestructureOfCurrentUser = (
+  currentUser: object | CurrentUser<string>
+) => {
+  if (currentUser && typeof currentUser === 'object' && '_id' in currentUser) {
+    return { ...currentUser };
+  }
+};
+```

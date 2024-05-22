@@ -4,7 +4,7 @@ export type CurrentUser<T> = {
   email: T;
   imageUrl: T;
   createdAt: Date;
-  updateAt: Date;
+  updatedAt: Date;
 };
 
 export type Candidate = {
