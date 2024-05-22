@@ -4,9 +4,9 @@ import CreatePosition from '../components/CreateRoom/CreatePosition';
 import { useCreateRoom } from '../store/createRoomSlice';
 import Timepicker from '../components/Timepicker';
 import { formatDateToISO } from '../utils/formatDate';
-import { createRoom } from '../api/index.api';
 import { useCurrentUserStore } from '../store/currentUserSlice';
 import { typeSafeDestructureOfCurrentUser } from '../utils/typeSafeDestructureOfCurrentUser';
+import { createRoom } from '../api/index.api';
 
 const CreateRoom = () => {
   // to render dynamic position forms
@@ -24,8 +24,7 @@ const CreateRoom = () => {
   const currentPosition = useCreateRoom((state) => state.positions);
   const currentUser = useCurrentUserStore((state) => state.currentUser);
 
-  const { _id, createdAt, email, imageUrl, updatedAt, username } =
-    typeSafeDestructureOfCurrentUser(currentUser) ?? {};
+  const { _id } = typeSafeDestructureOfCurrentUser(currentUser) ?? {};
 
   // creating component base on the state
   const toRenderDynamicPositionComponent = positions.map((pos, i) => (
@@ -56,8 +55,8 @@ const CreateRoom = () => {
     };
 
     createRoom(configRoomData);
+    // join the room with the code
   };
-  console.log(_id, createdAt, email, imageUrl, updatedAt, username);
 
   return (
     <div className="sm-p-4 space-y-4">

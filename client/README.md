@@ -83,7 +83,7 @@ its workin, but i need to create a way for user to delete the img whenever the u
   <br/>
   now i can submit the form data(room config) to my server and my server will process that request and save the form data to my database and will return the code that the client needs to access room component @client
 
-### TODO 05/21/2024
+### TODO 05/22/2024
 
 1. typesafe destructure the currentUser data.
 
@@ -96,3 +96,34 @@ export const typeSafeDestructureOfCurrentUser = (
   }
 };
 ```
+
+##### Continuation of TODO 05/21/2024 #2, 3
+
+2. extending #2
+   create a utility or service file. where we can subscribe to an event, and emit an event
+
+```js
+const socket = io('url', { options });
+
+// now we can just call this whenever we need to emit an event.
+export const emitEvent = (event, data) => {
+  socket.emit(event, data);
+};
+
+//same
+export const subscribeToEvent = (event, callback) => {
+  socket.on(event, callback);
+};
+
+export const disconnectSocket = () => {
+  socket.disconnect();
+};
+//
+```
+
+- after submitting the form to the server. the code that will use socket.emit("joinRoom", accessCode);
+- the server will have a socket.on("joinRoom", cb) // subscribe to an event
+- with acknowledge if success nav("/room") else throw error
+
+3. defining room
+   ??
