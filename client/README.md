@@ -125,5 +125,13 @@ export const disconnectSocket = () => {
 - the server will have a socket.on("joinRoom", cb) // subscribe to an event
 - with acknowledge if success nav("/room") else throw error
 
+### TODO 05/23/2024
+
 3. defining room
-   ??
+
+- <b>Power Interuption :/ </b>
+
+### TODO 05/24/2024
+
+1. refactor the socket @client. make it a context and custom hook
+2. Continuation of TODO 05/23/2024 #2,3
