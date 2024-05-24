@@ -5,6 +5,7 @@ import CreateRoom from './pages/CreateRoom';
 import RequiredAuth from './components/auth/RequiredAuth';
 import Signup from './components/auth/Signup';
 import Signin from './components/auth/Signin';
+import Room from './pages/Room';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
               {
                 path: 'create',
                 element: <CreateRoom />,
+              },
+              {
+                // tba :id
+                path: 'rooms',
+                element: <Room />,
               },
             ],
           },

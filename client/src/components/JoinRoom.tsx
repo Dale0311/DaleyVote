@@ -1,9 +1,11 @@
-import { api } from '../api/index.api';
+import { socket } from '../socket/index.socket';
 
 const JoinRoom = () => {
+  const code =
+    'c926af60705e41e0ac1d4c7a64212184a0b06460c952eb42b86a933d3cf7cc07';
   const handleClick = async () => {
     try {
-      const data = await api.get('/test');
+      socket.emit('join-room', code, 'dale');
     } catch (error) {
       console.log(error);
     }

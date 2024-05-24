@@ -123,7 +123,7 @@ export const disconnectSocket = () => {
 
 - after submitting the form to the server. the code that will use socket.emit("joinRoom", accessCode);
 - the server will have a socket.on("joinRoom", cb) // subscribe to an event
-- with acknowledge if success nav("/room") else throw error
+- with acknowledge if success nav("/room/:code") else throw error
 
 ### TODO 05/23/2024
 
@@ -135,3 +135,24 @@ export const disconnectSocket = () => {
 
 1. refactor the socket @client. make it a context and custom hook
 2. Continuation of TODO 05/23/2024 #2,3
+
+update: feels like i don't have what it takes to finish this + laziness took over.
+
+### TODO 05/25/2024
+
+1. diffirentiate how the client create a user and how the client join a user
+
+- creates room: client needs to config the room.
+- join room: client will need to provide a code to join a room
+
+2. "room" component will recieve a room code from urlParams using useParams() by react-router-dom.
+
+```txt
+@room component
+- create custom hook. useRoom
+   it will use useEffect and useState and it needs the urlParameter as parameter.
+   return {roomConfig}
+
+- room ui.
+   the ui will consume the roomConfig data.
+```

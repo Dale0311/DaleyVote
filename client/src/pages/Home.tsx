@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import JoinRoom from '../components/JoinRoom';
+import { useEffect } from 'react';
+import { socket } from '../socket/index.socket';
+import { useCurrentUserStore } from '../store/currentUserSlice';
 
 const names = ['Dale', 'KC', 'Justine'];
 const Home = () => {
