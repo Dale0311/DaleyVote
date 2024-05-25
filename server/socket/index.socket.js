@@ -8,21 +8,31 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: whiteList } });
 
-// socket logic goes here
 io.on('connection', (socket) => {
-  socket.on('join-room', async (room, userId) => {
+  socket.on('join-room', async (room, userId, callback) => {
     const roomExist = await Room.findOne({ code: room });
-    console.log(roomExist);
+
     if (roomExist) {
-      // append the userId to the participant property of the roomExist
-      // roomExist.
-      // if successfully appended
-      // return the updated data
+      // if the client doesn't exist in the participants array, append it
+      if (
+        !roomExist.participants.some(
+          (participant) => participant.userId === userId
+        )
+      ) {
+        roomExist.participants.push({ userId, socketId: socket.id });
+        await roomExist.save();
+      }
       socket.join(room);
-      // io.to(room).emit('user-joined-room', { roomData: roomExist });
-      // or acknowledge
-      io.to(room).emit('join-room', 'dale');
+      io.to(room).emit('user-join', userId);
+      callback(roomExist);
+    } else {
+      // room doesn't exist
+      callback({ status: "room doesn't exist " });
     }
+  });
+
+  socket.on('create-room', () => {
+    socket;
   });
 });
 
