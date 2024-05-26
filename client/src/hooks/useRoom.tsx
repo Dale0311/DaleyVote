@@ -4,19 +4,21 @@ import { typeSafeDestructureOfCurrentUser } from '../utils/typeSafeDestructureOf
 import { socket } from '../socket/index.socket';
 
 const useRoom = (code: string) => {
-  const [roomConfig, setRoomConfig] = useState();
+  //states
+  const [roomConfig, setRoomConfig] = useState({});
   const [error, setError] = useState('');
+
+  // get the current user id
   const currentUser = useCurrentUserStore((state) => state.currentUser);
   const { _id } = typeSafeDestructureOfCurrentUser(currentUser) ?? {};
+
   useEffect(() => {
-    socket.emit('join-room', code, _id, (err, response) => {
+    socket.emit('join-room', code, _id, (err: Error, response: object) => {
       if (err) {
         setError(err.message);
       }
       setRoomConfig(response);
     });
-
-    // return () => socket.disconnect();
   }, [code, _id]);
 
   return { roomConfig, error };

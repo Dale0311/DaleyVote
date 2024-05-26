@@ -6,14 +6,10 @@ import useRoom from '../hooks/useRoom';
 const Room = () => {
   // create useRoom
   const { code } = useParams();
-  const roomConfig = useRoom(code);
-  return (
-    <div>
-      {user?.map((u) => (
-        <li>{u}</li>
-      ))}
-    </div>
-  );
+  const roomConfig = useRoom(code ?? '');
+  console.log(roomConfig);
+  
+  return <div>hello world</div>;
 };
 
 export default Room;

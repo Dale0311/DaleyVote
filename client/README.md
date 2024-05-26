@@ -156,3 +156,9 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 - room ui.
    the ui will consume the roomConfig data.
 ```
+
+### TODO 05/26/2024
+
+<b>POWER INTERUPTION</b>
+
+1. debug error @useRoom and room component

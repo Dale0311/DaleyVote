@@ -9,8 +9,8 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: { origin: whiteList } });
 
 io.on('connection', (socket) => {
-  socket.on('join-room', async (room, userId, callback) => {
-    const roomExist = await Room.findOne({ code: room });
+  socket.on('join-room', async (code, userId, callback) => {
+    const roomExist = await Room.findOne({ code });
 
     if (roomExist) {
       // if the client doesn't exist in the participants array, append it
@@ -22,8 +22,8 @@ io.on('connection', (socket) => {
         roomExist.participants.push({ userId, socketId: socket.id });
         await roomExist.save();
       }
-      socket.join(room);
-      io.to(room).emit('user-join', userId);
+      socket.join(code);
+      io.to(code).emit('user-join', userId);
       callback(roomExist);
     } else {
       // room doesn't exist
