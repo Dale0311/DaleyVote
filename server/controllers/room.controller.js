@@ -1,7 +1,7 @@
-import cloudinary from "../config/cloudinary.js";
-import pLimit from "p-limit";
-import { generateCode } from "../utils/generateCode.js";
-import Room from "../models/Rooms.model.js";
+import cloudinary from '../config/cloudinary.js';
+import pLimit from 'p-limit';
+import { generateCode } from '../utils/generateCode.js';
+import Room from '../models/Rooms.model.js';
 
 const limit = pLimit(2);
 export const createRoom = async (req, res, next) => {
@@ -9,7 +9,7 @@ export const createRoom = async (req, res, next) => {
 
   if (!title || !createdById || !expiration || !votingDetails) {
     res.status(400);
-    next(new Error("Bad request"));
+    next(new Error('Bad request'));
   }
   // changed to uuid
   const code = generateCode();
@@ -19,7 +19,7 @@ export const createRoom = async (req, res, next) => {
     res.json({ code: response.code, success: true });
   } catch (error) {
     res.status(500);
-    next(new Error("Failed to save room config"));
+    next(new Error('Failed to save room config'));
   }
 };
 
@@ -30,7 +30,7 @@ export const uploadCandidatesImage = async (req, res) => {
     toUploadImages = candidates.map((candidate) => {
       const img = limit(async () => {
         return await cloudinary.uploader.upload(candidate.img, {
-          folder: "candidates_picture",
+          folder: 'candidates_picture',
         });
       });
       return img;

@@ -67,6 +67,8 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       setLoading(true);
       const updatedCandidates = await uploadImg(data.candidates);
       const updatedData = { ...data, candidates: updatedCandidates };
+      console.log(updatedData);
+
       addPosition(updatedData);
     } catch (error) {
       console.log(error);

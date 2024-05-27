@@ -20,7 +20,7 @@ const Timepicker = ({ duration, setDuration }: Prop) => {
     let val = value.replace(/^0+/, ''); // Remove leading zeros
     //e.g: val = "01" or "0" -> "1" or ""
     if (!val) {
-      setDuration((prev) => ({ ...prev, [name]: '0' }));
+      setDuration((prev) => ({ ...prev, [name]: 0 }));
       return;
     } else {
       const toNumVal = Number(val);

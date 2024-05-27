@@ -54,6 +54,7 @@ const CreateRoom = () => {
       votingDetails: currentPosition,
       createdById: _id,
     };
+    console.log(configRoomData);
 
     const res = await createRoom(configRoomData);
     if (res.success) {
@@ -78,7 +79,7 @@ const CreateRoom = () => {
       </div>
       {/* date */}
       <div className="">
-        <Timepicker key={'2'} duration={duration} setDuration={setDuration} />
+        <Timepicker duration={duration} setDuration={setDuration} />
       </div>
       {/* Positions */}
       <div>{toRenderDynamicPositionComponent}</div>

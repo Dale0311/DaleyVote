@@ -189,3 +189,4 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 1. debug timeleft - learn about utc formatted date.
 2. finish the ui of room component
 3. add interactivity of the ui such as vote
+4. bug: cannot create a room

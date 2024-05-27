@@ -22,6 +22,7 @@ export type Position = {
 export type ConfigRoomData = {
   title: string;
   expiration: Date;
+  createdById?: string;
   votingDetails: Position[];
 };
 
