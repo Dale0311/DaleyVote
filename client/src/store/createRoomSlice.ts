@@ -14,7 +14,7 @@ export const useCreateRoom = create<CreateRoomState>()((set) => ({
 
   removePosition: (id) => {
     set((state) => {
-      const updatedPos = state.positions.filter((pos) => pos.id !== id);
+      const updatedPos = state.positions.filter((pos) => pos._id !== id);
       return { positions: updatedPos };
     });
   },

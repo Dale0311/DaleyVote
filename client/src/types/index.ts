@@ -8,12 +8,13 @@ export type CurrentUser<T> = {
 };
 
 export type Candidate = {
+  _id?: string;
   img: ArrayBuffer | string;
   name: string;
 };
 
 export type Position = {
-  id: string;
+  _id: string;
   title: string;
   candidates: Candidate[];
 };

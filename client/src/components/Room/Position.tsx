@@ -1,6 +1,10 @@
+import { Position as Pos } from '../../types';
 import Candidate from '../CreateRoom/Candidate';
 
-const Position = ({ position }) => {
+type TProps = {
+  position: Pos;
+};
+const Position = ({ position }: TProps) => {
   console.log(position);
 
   //   const renderCandidates = position.candidates.map((candidate) => (

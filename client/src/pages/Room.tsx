@@ -13,7 +13,7 @@ const Room = () => {
     typeSafeDestructureForRoomConfig(roomConfig) ?? {};
 
   const renderPositions = votingDetails?.map((pos) => (
-    <Position position={pos} />
+    <Position key={pos._id} position={pos} />
   ));
   return (
     <div>

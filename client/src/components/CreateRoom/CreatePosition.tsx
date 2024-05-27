@@ -28,7 +28,7 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
   } = useForm<Position>({
     defaultValues: {
       title: '',
-      id: id,
+      _id: id,
       candidates: [candidateObject, candidateObject], // {name: "", img: null}
     },
   });
@@ -75,25 +75,6 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
       setLoading(false);
     }
   };
-  // const onHandleSubmit: SubmitHandler<Position> = (data) => {
-  //   // we cannot finalized position if position title already exist in our store.
-  //   const positionExist = currentPositions.find(
-  //     (pos) => pos.title === data.title
-  //   );
-  //   if (positionExist) {
-  //     setError(
-  //       'title',
-  //       {
-  //         message: `Position: ${getValues('title')} already exist`,
-  //       },
-  //       { shouldFocus: true }
-  //     );
-  //     return;
-  //   }
-
-  //   addPosition(data);
-  //   setIsFinalized(true);
-  // };
 
   // if any errors at all in form
   const errorExist = Boolean(errors?.candidates || errors?.title);
@@ -208,13 +189,13 @@ const CreatePosition = ({ id, index, setPositions }: Props) => {
                 // get all values that are inputted
                 const title = getValues('title');
                 const candidates = getValues('candidates');
-                const id = getValues('id');
+                const id = getValues('_id');
 
                 // remove data from store
                 removePosition(id);
 
                 // reset form fields wth these as default value
-                reset({ title, candidates, id });
+                reset({ title, candidates, _id: id });
 
                 // set finalized to false to prevents disabled to all inputs
                 setIsFinalized(false);

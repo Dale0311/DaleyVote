@@ -183,3 +183,9 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 
 - created Duration component ui for the duration of the room, and useTimeleft for logic
 - initialize position and candidate component
+
+### TODO 05/28/2024
+
+1. debug timeleft - learn about utc formatted date.
+2. finish the ui of room component
+3. add interactivity of the ui such as vote
