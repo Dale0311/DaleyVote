@@ -1,7 +1,7 @@
-import { jwtDecode } from 'jwt-decode';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useCurrentUserStore } from '../../store/currentUserSlice';
-import { CurrentUser } from '../../types';
+import { jwtDecode } from "jwt-decode";
+import { Navigate, Outlet } from "react-router-dom";
+import { useCurrentUserStore } from "../../store/currentUserSlice";
+import { CurrentUser } from "../../types";
 
 // if !currentUser? condition : condition2
 const RequiredAuth = () => {
@@ -18,7 +18,7 @@ const RequiredAuth = () => {
     const decoded: CurrentUser<string> = jwtDecode(token);
     setCurrentUser(decoded);
   }
-  return <>{token ? <Outlet /> : <Navigate to={'/signin'} />}</>;
+  return <>{token ? <Outlet /> : <Navigate to={"/signin"} />}</>;
 };
 
 export default RequiredAuth;

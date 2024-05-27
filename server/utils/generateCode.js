@@ -1,4 +1,4 @@
-import crypto from 'crypto';
-export const generateCode = () => {
-  return crypto.randomBytes(32).toString('hex');
+import crypto from "crypto";
+export const generateCode = (length) => {
+  return crypto.randomUUID().toString("hex");
 };

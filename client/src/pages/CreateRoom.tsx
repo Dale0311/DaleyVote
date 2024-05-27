@@ -1,26 +1,27 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import CreatePosition from '../components/CreateRoom/CreatePosition';
-import { useCreateRoom } from '../store/createRoomSlice';
-import Timepicker from '../components/Timepicker';
-import { formatDateToISO } from '../utils/formatDate';
-import { useCurrentUserStore } from '../store/currentUserSlice';
-import { typeSafeDestructureOfCurrentUser } from '../utils/typeSafeDestructureOfCurrentUser';
-import { createRoom } from '../api/index.api';
+import CreatePosition from "../components/CreateRoom/CreatePosition";
+import { useCreateRoom } from "../store/createRoomSlice";
+import Timepicker from "../components/Timepicker";
+import { formatDateToISO } from "../utils/formatDate";
+import { useCurrentUserStore } from "../store/currentUserSlice";
+import { typeSafeDestructureOfCurrentUser } from "../utils/typeSafeDestructureOfCurrentUser";
+import { createRoom } from "../api/index.api";
+import { useNavigate } from "react-router-dom";
 
 const CreateRoom = () => {
   // to render dynamic position forms
   const [positions, setPositions] = useState([
-    'acdd9c90-faac-429d-9a0d-39e83d50f242',
+    "acdd9c90-faac-429d-9a0d-39e83d50f242",
   ]);
 
-  // TBA
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [duration, setDuration] = useState<{ hours: number; minutes: number }>({
     hours: 0,
     minutes: 0,
   });
 
+  const nav = useNavigate();
   const currentPosition = useCreateRoom((state) => state.positions);
   const currentUser = useCurrentUserStore((state) => state.currentUser);
 
@@ -54,8 +55,11 @@ const CreateRoom = () => {
       createdById: _id,
     };
 
-    createRoom(configRoomData);
-    // join the room with the code
+    const res = await createRoom(configRoomData);
+    if (res.success) {
+      // join the room with the code
+      nav(`/rooms/${res.code}`);
+    }
   };
 
   return (
@@ -74,7 +78,7 @@ const CreateRoom = () => {
       </div>
       {/* date */}
       <div className="">
-        <Timepicker key={'2'} duration={duration} setDuration={setDuration} />
+        <Timepicker key={"2"} duration={duration} setDuration={setDuration} />
       </div>
       {/* Positions */}
       <div>{toRenderDynamicPositionComponent}</div>
@@ -95,8 +99,8 @@ const CreateRoom = () => {
         <button
           className={`flex space-x-1 items-center p-3 bg-blue-500 text-white hover:bg-blue-600 rounded font-body ${
             !canSubmit
-              ? 'cursor-not-allowed disabled:hover:bg-blue-400 disabled:bg-blue-400'
-              : ''
+              ? "cursor-not-allowed disabled:hover:bg-blue-400 disabled:bg-blue-400"
+              : ""
           }`}
           // clear data in createRoom
           disabled={!canSubmit}

@@ -12,7 +12,6 @@ api.interceptors.request.use((config) => {
     const headers = new AxiosHeaders();
     headers.set('Authorization', `Bearer ${token}`);
     config.headers = headers;
-    console.log(config.headers);
   }
   return config;
 });
@@ -23,6 +22,6 @@ export const uploadImg = async (candidates: Candidate[]) => {
 };
 
 export const createRoom = async (configRoomData: ConfigRoomData) => {
-  const res = await api.post('/room', configRoomData);
-  console.log(res.data);
+    const res = await api.post('/room', configRoomData);
+    return res.data
 };

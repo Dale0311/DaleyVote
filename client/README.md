@@ -91,7 +91,7 @@ its workin, but i need to create a way for user to delete the img whenever the u
 export const typeSafeDestructureOfCurrentUser = (
   currentUser: object | CurrentUser<string>
 ) => {
-  if (currentUser && typeof currentUser === 'object' && '_id' in currentUser) {
+  if (currentUser && typeof currentUser === "object" && "_id" in currentUser) {
     return { ...currentUser };
   }
 };
@@ -103,7 +103,7 @@ export const typeSafeDestructureOfCurrentUser = (
    create a utility or service file. where we can subscribe to an event, and emit an event
 
 ```js
-const socket = io('url', { options });
+const socket = io("url", { options });
 
 // now we can just call this whenever we need to emit an event.
 export const emitEvent = (event, data) => {
@@ -162,3 +162,21 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 <b>POWER INTERUPTION</b>
 
 1. debug error @useRoom and room component
+
+### TODO 05/27/2024
+
+1. useRoom is fully functional
+
+- now useRoom hook allows me to successfuly trycatch the data that is returned by callback
+- also added typing for useRoom. Now it provides snippets when destructuring roomConfig state using typeSafeDestructureForRoomConfig
+
+2. implement the dynamic route for rooms/:id
+   <b>DONE</b>
+
+3. change randomBytes to uuid @generateCode
+   now generateCode fn uses uuid instead of randomBytes.
+
+4. delete temp folder and its files
+   <b>DONE</b>
+
+5. create ui for room component

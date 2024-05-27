@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 export const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode || 500;
@@ -12,16 +12,16 @@ export const requireToken = (req, res, next) => {
   // validate if token exist
   if (!auth) {
     res.status(401);
-    return next(new Error('Unauthorized'));
+    return next(new Error("Unauthorized"));
   }
 
   // verify if token secret is the same to our secret in .env
-  const token = auth.split(' ')[1];
+  const token = auth.split(" ")[1];
   jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
     // if valid
     if (err) {
       res.status(403);
-      return next(new Error('Forbidden'));
+      return next(new Error("Forbidden"));
     }
 
     // if valid

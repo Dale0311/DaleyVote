@@ -1,6 +1,6 @@
-import User from '../models/Users.model.js';
-import bcrypt from 'bcryptjs';
-import { generateToken } from '../utils/jwt.js';
+import User from "../models/Users.model.js";
+import bcrypt from "bcryptjs";
+import { generateToken } from "../utils/jwt.js";
 
 export const createUser = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -8,14 +8,14 @@ export const createUser = async (req, res, next) => {
   // validation
   if (!username || !email || !password) {
     res.status(400);
-    return next(new Error('Fields: username, email and password are required'));
+    return next(new Error("Fields: username, email and password are required"));
   }
 
   const emailExist = await User.findOne({ email });
 
   if (emailExist) {
     res.status(409);
-    return next(new Error('Email already exist'));
+    return next(new Error("Email already exist"));
   }
 
   const hashPwd = await bcrypt.hash(password, 12);
@@ -25,7 +25,7 @@ export const createUser = async (req, res, next) => {
       username,
       email,
       password: hashPwd,
-      imageUrl: '',
+      imageUrl: "",
     });
     const { password, ...props } = data._doc;
 
@@ -34,7 +34,7 @@ export const createUser = async (req, res, next) => {
     generateToken(id, res);
     res.status(201).json(props);
   } catch (error) {
-    next(new Error('Something went wrong in the server'));
+    next(new Error("Something went wrong in the server"));
   }
 };
 
@@ -42,7 +42,7 @@ export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
     res.status(400);
-    return next(new Error('Email and password are required'));
+    return next(new Error("Email and password are required"));
   }
 
   const userExist = await User.findOne({ email });
@@ -55,7 +55,7 @@ export const signin = async (req, res, next) => {
   bcrypt.compare(password, userExist.password, (err, success) => {
     if (!success) {
       res.status(401);
-      return next(new Error('Email or password is incorrect'));
+      return next(new Error("Email or password is incorrect"));
     }
 
     const { password: pass, ...data } = userExist._doc;

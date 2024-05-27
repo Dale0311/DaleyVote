@@ -1,11 +1,8 @@
-import { Link } from 'react-router-dom';
-import Card from '../components/Card';
-import JoinRoom from '../components/JoinRoom';
-import { useEffect } from 'react';
-import { socket } from '../socket/index.socket';
-import { useCurrentUserStore } from '../store/currentUserSlice';
+import { Link } from "react-router-dom";
+import Card from "../components/Card";
+import JoinRoom from "../components/JoinRoom";
 
-const names = ['Dale', 'KC', 'Justine'];
+const names = ["Dale", "KC", "Justine"];
 const Home = () => {
   return (
     <div className="border">
@@ -13,7 +10,7 @@ const Home = () => {
       <div className="flex space-x-2">
         <Link
           className=" py-2 px-6 text-white bg-blue-500 hover:bg-blue-600 rounded font-body"
-          to={'create'}
+          to={"create"}
         >
           create room +
         </Link>
