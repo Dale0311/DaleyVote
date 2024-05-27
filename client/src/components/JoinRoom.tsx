@@ -1,20 +1,25 @@
+import { useState } from 'react';
 import { socket } from '../socket/index.socket';
+import { useNavigate } from 'react-router-dom';
 
 const JoinRoom = () => {
-  const code =
-    'c926af60705e41e0ac1d4c7a64212184a0b06460c952eb42b86a933d3cf7cc07';
-  const handleClick = async () => {
-    try {
-      socket.emit('join-room', code, 'dale');
-    } catch (error) {
-      console.log(error);
-    }
+  const [code, setCode] = useState<string>('');
+  const nav = useNavigate();
+  const handleClick = () => {
+    if (!code) return;
+    nav(`rooms/${code}`);
   };
   return (
     <div>
-      <input type="text" className="p-1 border" />
+      <input
+        type="text"
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+        className="p-1 border"
+      />
       <button
-        className=" py-2 px-6 text-white bg-blue-500 hover:bg-blue-600 rounded font-body"
+        className={`py-2 px-6 text-white bg-blue-500 hover:bg-blue-600 rounded font-body disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-blue-500`}
+        disabled={!Boolean(code)}
         onClick={handleClick}
       >
         join room +

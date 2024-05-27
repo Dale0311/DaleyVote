@@ -1,15 +1,15 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import CreateRoom from "./pages/CreateRoom";
-import RequiredAuth from "./components/auth/RequiredAuth";
-import Signup from "./components/auth/Signup";
-import Signin from "./components/auth/Signin";
-import Room from "./pages/Room";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import CreateRoom from './pages/CreateRoom';
+import RequiredAuth from './components/auth/RequiredAuth';
+import Signup from './components/auth/Signup';
+import Signin from './components/auth/Signin';
+import Room from './pages/Room';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     children: [
       {
         element: <RequiredAuth />,
@@ -22,11 +22,11 @@ const router = createBrowserRouter([
                 element: <Home />,
               },
               {
-                path: "create",
+                path: 'create',
                 element: <CreateRoom />,
               },
               {
-                path: "rooms/:code",
+                path: 'rooms/:code',
                 element: <Room />,
               },
             ],
@@ -34,11 +34,11 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/signup",
+        path: '/signup',
         element: <Signup />,
       },
       {
-        path: "/signin",
+        path: '/signin',
         element: <Signin />,
       },
     ],

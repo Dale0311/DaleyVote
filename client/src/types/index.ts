@@ -24,7 +24,6 @@ export type ConfigRoomData = {
   votingDetails: Position[];
 };
 
-
 // types for room
 type TParticipant<T> = {
   _id: T;
@@ -43,6 +42,6 @@ export type TRoomConfig = {
   expiration: string;
   participants: TParticipant<string>[]; // or Array<TParticipant<string>> |s
   title: string;
-  votingDetails: Position[]
+  votingDetails: Position[];
   updatedAt: string;
 };
