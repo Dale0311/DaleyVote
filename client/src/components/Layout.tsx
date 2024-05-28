@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
@@ -9,12 +9,7 @@ const Layout = () => {
         </div>
         <img src="/profile.png" alt="" className="h-12 w-12 rounded-full" />
       </nav>
-      <Link
-        to={"rooms/2c8b139f-bb15-460c-ae15-ab0caa6f64ef"}
-        className="px-6 py-2 rounded text-white bg-blue-500"
-      >
-        Test
-      </Link>
+
       <Outlet />
     </div>
   );

@@ -188,7 +188,11 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 
 1. debug timeleft - learn about utc formatted date.
    now the time left is accurately display. it is causing some bug because the inputted hours, minutes property are type string instead of number which @formatDate fn expected
+
 2. finish the ui of room component
+
+- need to create a ui for progress bar, that accepts total votes, votes
+
 3. add interactivity of the ui such as vote
 
 4. bug: cannot create a room
