@@ -1,6 +1,5 @@
-import { TPositionForRoom } from "../../types";
-import Candidate from "../CreateRoom/Candidate";
-
+import { TPositionForRoom } from '../../types';
+import Candidate from '../CreateRoom/Candidate';
 type TProps = {
   position: TPositionForRoom;
 };
@@ -11,7 +10,9 @@ const Position = ({ position }: TProps) => {
   ));
   return (
     <div className="border p-4 space-y-4">
-      <h1 className="text-lg font-semibold font-head">{position.title}</h1>
+      <div>
+        <h1 className="text-lg font-semibold font-head">{position.title}</h1>
+      </div>
       {renderCandidates}
     </div>
   );

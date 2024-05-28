@@ -3,7 +3,7 @@ const VoteBar = () => {
   return (
     <div className="w-full bg-gray-50 rounded-full h-6">
       <div
-        className="bg-gray-200 h-6 rounded-full"
+        className="bg-gray-200 group-hover:bg-blue-500 h-6 rounded-full"
         style={{ width: `${progress}%` }}
       ></div>
     </div>

@@ -91,7 +91,7 @@ its workin, but i need to create a way for user to delete the img whenever the u
 export const typeSafeDestructureOfCurrentUser = (
   currentUser: object | CurrentUser<string>
 ) => {
-  if (currentUser && typeof currentUser === "object" && "_id" in currentUser) {
+  if (currentUser && typeof currentUser === 'object' && '_id' in currentUser) {
     return { ...currentUser };
   }
 };
@@ -103,7 +103,7 @@ export const typeSafeDestructureOfCurrentUser = (
    create a utility or service file. where we can subscribe to an event, and emit an event
 
 ```js
-const socket = io("url", { options });
+const socket = io('url', { options });
 
 // now we can just call this whenever we need to emit an event.
 export const emitEvent = (event, data) => {
@@ -189,15 +189,42 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 1. debug timeleft - learn about utc formatted date.
    now the time left is accurately display. it is causing some bug because the inputted hours, minutes property are type string instead of number which @formatDate fn expected
 
-2. finish the ui of room component
-
-- need to create a ui for progress bar, that accepts total votes, votes
-
-3. add interactivity of the ui such as vote
-
-4. bug: cannot create a room
+2. bug: cannot create a room
    it is because of the votingDetails where every position already have an \_id property. which should only exist when the db saved the room config
 
-5. create types for position and candidates for Room component to consume
+3. create types for position and candidates for Room component to consume
+   <b>DONE</b>
 
-<b>DONE</b>
+### TODO 05/29/2024
+
+1. finish the ui of room component
+
+- need to create a ui for progress bar, that accepts total votes, votes
+- explore participants prop
+- need to understand how should i do this
+
+  - so i need to create a form and use radio to only pick one of the candidates, and when i submit the form it increases the voteBar percentage and total votes
+
+  // for position component to consume.
+
+  - const currentUserVotes = participants.find(participant => participant.userId === currentUser.\_id)
+
+  // nested Higher order fn? or just refactor?
+
+  - const totalVotes = participants.filter(participant => participant.votes)
+
+```js
+
+// participant object
+participant = {
+  _id: "6655b1fbe764f791f6c242c4"
+  socketId: "VNSna1phMPeVZk6UAAAB"
+  userId: "663b6a75f48fa613b59a6477"
+  votes: [
+    {
+      position: genericType,
+      votedFor: genericType,
+    }
+  ]
+}
+```
