@@ -1,4 +1,4 @@
-import useTimeleft from '../../hooks/useTimeleft';
+import useTimeleft from "../../hooks/useTimeleft";
 
 type TDurationProps = {
   targetDate: string;
@@ -9,12 +9,12 @@ const Duration = ({ targetDate }: TDurationProps) => {
     <div className="flex space-x-4 text-center text-white bg-gray-800 p-4 rounded-lg">
       {!timeLeft ? (
         // tba
-        <span>Time's up!</span>
+        <span className="text-2xl">Time's up!</span>
       ) : (
         // * mapping object using entries
         Object.entries(timeLeft).map(([unit, value]) => (
           <div key={unit} className="flex flex-col">
-            <span className="text-2xl font-bold">{value}</span>
+            <span className="text font-bold text-2xl">{value}</span>
             <span className="uppercase">{unit}</span>
           </div>
         ))

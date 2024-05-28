@@ -1,9 +1,9 @@
-import { TRoomConfig } from "../types"
+import { TRoomConfig } from "../types";
 
 const typeSafeDestructureForRoomConfig = (roomConfig: TRoomConfig | null) => {
-  if(roomConfig && typeof roomConfig === "object" && "_id" in roomConfig){
-    return roomConfig
+  if (roomConfig && typeof roomConfig === "object" && "_id" in roomConfig) {
+    return roomConfig;
   }
-}
+};
 
-export default typeSafeDestructureForRoomConfig
+export default typeSafeDestructureForRoomConfig;

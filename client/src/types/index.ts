@@ -44,6 +44,19 @@ export type TRoomConfig = {
   expiration: string;
   participants: TParticipant<string>[]; // or Array<TParticipant<string>> |s
   title: string;
-  votingDetails: Position[];
+  votingDetails: TPositionForRoom[];
   updatedAt: string;
+};
+
+export type TCandidateWithImgObj = {
+  img: {
+    public_id: string;
+    secure_url: string;
+  };
+  name: string;
+  _id: string;
+};
+
+export type TPositionForRoom = Omit<Position, "candidates"> & {
+  candidates: TCandidateWithImgObj[];
 };

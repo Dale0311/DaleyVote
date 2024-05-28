@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface TDurationProps {
   targetDate?: string;
@@ -18,7 +18,7 @@ const useTimeleft = ({ targetDate }: TDurationProps) => {
     const calculateTimeLeft = () => {
       // get the diff time between the targetDate and currentDate
       const difference =
-        new Date(targetDate || '').getTime() - new Date().getTime();
+        new Date(targetDate || "").getTime() - new Date().getTime();
       let timeLeft: TimeLeft | null = null;
 
       // create hours, minutes, seconds base on the diff and miliseconds
