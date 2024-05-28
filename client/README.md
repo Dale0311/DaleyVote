@@ -91,7 +91,7 @@ its workin, but i need to create a way for user to delete the img whenever the u
 export const typeSafeDestructureOfCurrentUser = (
   currentUser: object | CurrentUser<string>
 ) => {
-  if (currentUser && typeof currentUser === 'object' && '_id' in currentUser) {
+  if (currentUser && typeof currentUser === "object" && "_id" in currentUser) {
     return { ...currentUser };
   }
 };
@@ -103,7 +103,7 @@ export const typeSafeDestructureOfCurrentUser = (
    create a utility or service file. where we can subscribe to an event, and emit an event
 
 ```js
-const socket = io('url', { options });
+const socket = io("url", { options });
 
 // now we can just call this whenever we need to emit an event.
 export const emitEvent = (event, data) => {
@@ -187,6 +187,9 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 ### TODO 05/28/2024
 
 1. debug timeleft - learn about utc formatted date.
+   now the time left is accurately display. it is causing some bug because the inputted hours, minutes property are type string instead of number which @formatDate fn expected
 2. finish the ui of room component
 3. add interactivity of the ui such as vote
+
 4. bug: cannot create a room
+   it is because of the votingDetails where every position already have an \_id property. which should only exist when the db saved the room config

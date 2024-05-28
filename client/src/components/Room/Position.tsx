@@ -1,5 +1,5 @@
-import { Position as Pos } from '../../types';
-import Candidate from '../CreateRoom/Candidate';
+import { Position as Pos } from "../../types";
+import Candidate from "../CreateRoom/Candidate";
 
 type TProps = {
   position: Pos;
