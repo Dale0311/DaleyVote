@@ -91,7 +91,7 @@ its workin, but i need to create a way for user to delete the img whenever the u
 export const typeSafeDestructureOfCurrentUser = (
   currentUser: object | CurrentUser<string>
 ) => {
-  if (currentUser && typeof currentUser === 'object' && '_id' in currentUser) {
+  if (currentUser && typeof currentUser === "object" && "_id" in currentUser) {
     return { ...currentUser };
   }
 };
@@ -103,7 +103,7 @@ export const typeSafeDestructureOfCurrentUser = (
    create a utility or service file. where we can subscribe to an event, and emit an event
 
 ```js
-const socket = io('url', { options });
+const socket = io("url", { options });
 
 // now we can just call this whenever we need to emit an event.
 export const emitEvent = (event, data) => {
@@ -203,26 +203,30 @@ update: feels like i don't have what it takes to finish this + laziness took ove
 - explore participants prop
 - need to understand how should i do this
 
-  - so i need to create a form and use radio to only pick one of the candidates, and when i submit the form it increases the voteBar percentage and total votes
+  - logic #1 : im gonna use the currentUserVotes to render the ui, if the currentUserAlready voted to specific position
 
-  // for position component to consume.
+  ```js
+    const currentUserVotes = participants.find(participant => participant.userId === currentUser.\_id)
+  ```
 
-  - const currentUserVotes = participants.find(participant => participant.userId === currentUser.\_id)
+  - logic #2 : using the participants.votes i am gonna create totalVotes variable that will be part of the logic inside the position component
+  - logic #3 : using the totalVotes to partition the progress of each voteBar of the candidates
+  - logic #4 : create form for submitting a vote if the user doesn't voted yet.
 
-  // nested Higher order fn? or just refactor?
-
-  - const totalVotes = participants.filter(participant => participant.votes)
+  ```txt
+    try using radio input for candidates
+  ```
 
 ```js
 
-// participant object
+// participant object of {participants: participant[]}
 participant = {
   _id: "6655b1fbe764f791f6c242c4"
   socketId: "VNSna1phMPeVZk6UAAAB"
   userId: "663b6a75f48fa613b59a6477"
   votes: [
     {
-      position: genericType,
+      position: genericType // -> string, required
       votedFor: genericType,
     }
   ]
