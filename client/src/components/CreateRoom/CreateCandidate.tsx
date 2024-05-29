@@ -1,13 +1,13 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 import {
   FieldErrors,
   UseFieldArrayRemove,
   UseFormRegister,
   UseFormSetValue,
-} from 'react-hook-form';
-import { IoClose } from 'react-icons/io5';
+} from "react-hook-form";
+import { IoClose } from "react-icons/io5";
 
-import { Position } from '../../types';
+import { Position } from "../../types";
 
 type Prop = {
   register: UseFormRegister<Position>;
@@ -65,7 +65,7 @@ const CreateCandidate = ({
 
   const requireFileError = errors.candidates?.[index]?.img
     ? `border-red-500 text-red-500`
-    : '';
+    : "";
 
   return (
     <div className="font-body p-4 space-x-2 flex border relative">
@@ -83,10 +83,10 @@ const CreateCandidate = ({
       {previewPicture ? (
         <img
           className={`w-32 h-32 object-contain border  ${
-            isFinalized ? 'cursor-not-allowed' : 'cursor-pointer'
+            isFinalized ? "cursor-not-allowed" : "cursor-pointer"
           }`}
-          onClick={() => (!isFinalized ? imgInputRef.current?.click() : '')}
-          src={typeof previewPicture === 'string' ? previewPicture : ''}
+          onClick={() => (!isFinalized ? imgInputRef.current?.click() : "")}
+          src={typeof previewPicture === "string" ? previewPicture : ""}
         />
       ) : (
         <div
@@ -103,8 +103,8 @@ const CreateCandidate = ({
           placeholder="name"
           className={`border p-1 rounded ${
             errors.candidates?.[index]?.name &&
-            'border-red-500 placeholder:text-red-500 outline-none'
-          } ${isFinalized ? 'cursor-not-allowed' : ''} `}
+            "border-red-500 placeholder:text-red-500 outline-none"
+          } ${isFinalized ? "cursor-not-allowed" : ""} `}
           {...register(`candidates.${index}.name`, { required: true })}
         />
       </div>

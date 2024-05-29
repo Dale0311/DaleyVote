@@ -209,8 +209,14 @@ update: feels like i don't have what it takes to finish this + laziness took ove
     const currentUserVotes = participants.find(participant => participant.userId === currentUser.\_id)
   ```
 
+  in theory the ui will render base on the currentUserVote, but i cannot know right now because i need to create a form if the current user did not vote yet.
+
   - logic #2 : using the participants.votes i am gonna create totalVotes variable that will be part of the logic inside the position component
+
   - logic #3 : using the totalVotes to partition the progress of each voteBar of the candidates
+
+  <b>Logic 2, 3 are done. again in theory. because we cannot vote yet</b>
+
   - logic #4 : create form for submitting a vote if the user doesn't voted yet.
 
   ```txt

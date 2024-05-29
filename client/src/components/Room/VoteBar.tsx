@@ -1,10 +1,18 @@
-const VoteBar = () => {
-  const progress = 30;
+type TProps = {
+  candidatePercentageVoteBar: number;
+  userVotedForThisCandidate: boolean;
+};
+const VoteBar = ({
+  candidatePercentageVoteBar,
+  userVotedForThisCandidate,
+}: TProps) => {
   return (
     <div className="w-full bg-gray-50 rounded-full h-6">
       <div
-        className="bg-gray-200 group-hover:bg-blue-500 h-6 rounded-full"
-        style={{ width: `${progress}%` }}
+        className={` group-hover:bg-blue-500 h-6 rounded-full ${
+          userVotedForThisCandidate ? "bg-blue-500" : "bg-gray-200"
+        }`}
+        style={{ width: `${candidatePercentageVoteBar}%` }}
       ></div>
     </div>
   );

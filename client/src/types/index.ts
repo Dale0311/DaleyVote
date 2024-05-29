@@ -26,12 +26,15 @@ export type ConfigRoomData = {
   votingDetails: Position[];
 };
 
+// type for vote
+export type TVotes = { position: string; votedFor: string };
+
 // types for room
-type TParticipant<T> = {
+export type TParticipant<T> = {
   _id: T;
   userId: T;
   socketId: T;
-  votes?: Array<string>;
+  votes: TVotes[];
 };
 
 export type TRoomConfig = {
