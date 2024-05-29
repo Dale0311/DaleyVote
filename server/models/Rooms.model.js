@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const genericType = {
@@ -43,5 +43,5 @@ const roomSchema = new Schema(
   { timestamps: true }
 );
 
-const Room = mongoose.model("Room", roomSchema);
+const Room = mongoose.model('Room', roomSchema);
 export default Room;

@@ -1,5 +1,6 @@
-import { TParticipant, TPositionForRoom, TVotes } from "../../types";
-import Candidate from "../CreateRoom/Candidate";
+import { useForm } from 'react-hook-form';
+import { TPositionForRoom, TVotes } from '../../types';
+import Candidate from '../CreateRoom/Candidate';
 type TProps = {
   position: TPositionForRoom;
   currentUserVoteForPosition?: TVotes;
@@ -11,6 +12,7 @@ const Position = ({
   currentUserVoteForPosition,
   totalVoteForPos,
 }: TProps) => {
+  // total votes
   const totalVotes = totalVoteForPos.length;
 
   // render candidates

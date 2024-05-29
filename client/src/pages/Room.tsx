@@ -1,18 +1,18 @@
-import { useParams } from "react-router-dom";
-import useRoom from "../hooks/useRoom";
-import typeSafeDestructureForRoomConfig from "../utils/typeSafeDestructureForRoomConfig";
-import Duration from "../components/Room/Duration";
-import Position from "../components/Room/Position";
-import { useCurrentUserStore } from "../store/currentUserSlice";
-import { typeSafeDestructureOfCurrentUser } from "../utils/typeSafeDestructureOfCurrentUser";
-import { TVotes } from "../types";
+import { useParams } from 'react-router-dom';
+import useRoom from '../hooks/useRoom';
+import typeSafeDestructureForRoomConfig from '../utils/typeSafeDestructureForRoomConfig';
+import Duration from '../components/Room/Duration';
+import Position from '../components/Room/Position';
+import { useCurrentUserStore } from '../store/currentUserSlice';
+import { typeSafeDestructureOfCurrentUser } from '../utils/typeSafeDestructureOfCurrentUser';
+import { TVotes } from '../types';
 
 type TTotalVotes = TVotes[];
 
 const Room = () => {
   // create useRoom
   const { code } = useParams();
-  const { loading, roomConfig } = useRoom(code ?? "");
+  const { loading, roomConfig } = useRoom(code ?? '');
   const currentUser = useCurrentUserStore((state) => state.currentUser);
   const { _id } = typeSafeDestructureOfCurrentUser(currentUser) ?? {};
 
@@ -40,7 +40,6 @@ const Room = () => {
         }
       })
     );
-    console.log(totalVoteForPos.length);
 
     return (
       <Position
@@ -55,10 +54,14 @@ const Room = () => {
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <h1 className="font-body text-xl">{title}</h1>
-        <Duration targetDate={expiration || ""} />
+        <Duration targetDate={expiration || ''} />
       </div>
       <div>{renderPositions}</div>
-      {loading ? <p>fetching configuration...</p> : <p>fetched data</p>}
+      <div className="flex justify-end">
+        <button className="py-2 px-6 bg-blue-500 hover:bg-blue-600 text-white rounded text-lg font-body">
+          Submit Vote
+        </button>
+      </div>
     </div>
   );
 };
