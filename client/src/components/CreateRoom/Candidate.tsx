@@ -1,6 +1,7 @@
-import VoteBar from '../Room/VoteBar';
-import { FaRegCircle } from 'react-icons/fa';
-import { FaRegDotCircle } from 'react-icons/fa';
+import VoteBar from "../Room/VoteBar";
+import { FaRegCircle } from "react-icons/fa";
+import { FaRegDotCircle } from "react-icons/fa";
+import { TVotes } from "../../types";
 type TProps = {
   img: {
     public_id: string;
@@ -11,6 +12,9 @@ type TProps = {
   id: string;
   totalVotes: number;
   totalVotesForCandidate: number;
+  positionTitle: string;
+  votedForState?: string;
+  setVotes: React.Dispatch<React.SetStateAction<TVotes[]>>;
 };
 
 const Candidate = ({
@@ -20,21 +24,44 @@ const Candidate = ({
   id,
   totalVotes,
   totalVotesForCandidate,
+  positionTitle,
+  setVotes,
+  votedForState,
 }: TProps) => {
   const { votedFor } = currentUserVoteForPosition ?? {};
 
   // if the user voted for this candidate
-  const userVotedForThisCandidate = votedFor === id; // i dunno a better var name >_<
+  const userVotedForThisCandidate = (votedFor || votedForState) === id; // i dunno a better var name >_<
 
   // percentage of the VoteBar of the candidate
   const candidatePercentageVoteBar =
     Math.floor((totalVotesForCandidate / totalVotes) * 100) || 0;
 
+  // handle vote click
+  const handleClickVote = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setVotes((prev) => {
+      const positionExist = prev.find(
+        (vote) => vote.position === positionTitle
+      );
+
+      // if position title doesn't exist in the votes array, simply add it
+      if (!positionExist)
+        return [...prev, { position: positionTitle, votedFor: id }];
+
+      // if positionTitle === vote.position? update the object, else append the object
+      return prev.map((vote) =>
+        vote.position === positionTitle ? { ...vote, votedFor: id } : vote
+      );
+    });
+  };
   return (
     <div
       className={`font-body p-4 space-x-2 flex cursor-pointer group border-2 hover:border-blue-500 rounded ${
-        userVotedForThisCandidate ? 'border-blue-500' : ''
+        userVotedForThisCandidate ? "border-blue-500" : ""
       }`}
+      onClick={handleClickVote}
     >
       <div className="h-32 w-32 overflow-hidden">
         <img

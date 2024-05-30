@@ -91,7 +91,7 @@ its workin, but i need to create a way for user to delete the img whenever the u
 export const typeSafeDestructureOfCurrentUser = (
   currentUser: object | CurrentUser<string>
 ) => {
-  if (currentUser && typeof currentUser === 'object' && '_id' in currentUser) {
+  if (currentUser && typeof currentUser === "object" && "_id" in currentUser) {
     return { ...currentUser };
   }
 };
@@ -103,7 +103,7 @@ export const typeSafeDestructureOfCurrentUser = (
    create a utility or service file. where we can subscribe to an event, and emit an event
 
 ```js
-const socket = io('url', { options });
+const socket = io("url", { options });
 
 // now we can just call this whenever we need to emit an event.
 export const emitEvent = (event, data) => {
@@ -241,4 +241,6 @@ participant = {
 
 ### TODO 05/30/2024
 
-create a way for the client to submit its vote
+- create a way for the client to submit its vote
+  <b>DONE</b>
+- create a way to update the votes of user in room

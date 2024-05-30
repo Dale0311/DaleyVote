@@ -1,6 +1,6 @@
 import axios, { AxiosHeaders } from "axios";
 import { useCurrentUserStore } from "../store/currentUserSlice";
-import { Candidate, ConfigRoomData } from "../types";
+import { Candidate, ConfigRoomData, TVotes } from "../types";
 
 export const api = axios.create({
   baseURL: "http://localhost:5300/api/v1",
@@ -24,4 +24,10 @@ export const uploadImg = async (candidates: Candidate[]) => {
 export const createRoom = async (configRoomData: ConfigRoomData) => {
   const res = await api.post("/room", configRoomData);
   return res.data;
+};
+
+type TUserVotes = { roomId: string; userId: string; votes: TVotes[] };
+export const userVotes = async ({ roomId, userId, votes }: TUserVotes) => {
+  const res = await api.put(`/room/${roomId}`, { userId, votes });
+  console.log(res.data);
 };

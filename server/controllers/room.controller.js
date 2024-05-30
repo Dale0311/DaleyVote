@@ -33,6 +33,37 @@ export const createRoom = async (req, res, next) => {
   }
 };
 
+export const userVotes = async (req, res, next) => {
+  const { roomId } = req.params;
+  const { userId, votes } = req.body;
+
+  // // validation
+  if (!roomId || !userId || votes.length < 1) {
+    res.status("400");
+    return next(new Error("Bad request"));
+  }
+
+  Room.findOneAndReplace({});
+
+  // const room = await Room.findById(roomId);
+  // if (!room) {
+  //   res.status(404);
+  //   return next(new Error("Room doesn't exist"));
+  // }
+
+  // const updatedParticipants = room.participants.map((par) =>
+  //   par.id === userId ? { ...par, votes } : par
+  // );
+
+  // // update the participants property
+  // const updatedRoom = await room.updateOne(
+  //   { participants: updatedParticipants },
+  //   { new: true }
+  // );
+
+  // res.json(updatedRoom);
+};
+
 export const uploadCandidatesImage = async (req, res) => {
   const candidates = req.body;
   let toUploadImages;
